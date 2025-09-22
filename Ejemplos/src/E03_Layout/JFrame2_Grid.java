@@ -45,7 +45,8 @@ public class JFrame2_Grid extends javax.swing.JFrame {
 
         jPanel1.setLayout(new java.awt.GridLayout(3, 3, 5, 5));
 
-        jButton2.setText("jButton2");
+        jButton2.setText("jButton1");
+        jButton2.setActionCommand("jButton1");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 muestraMensaje(evt);
@@ -53,7 +54,7 @@ public class JFrame2_Grid extends javax.swing.JFrame {
         });
         jPanel1.add(jButton2);
 
-        jButton1.setText("jButton1");
+        jButton1.setText("jButton2");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 muestraMensaje(evt);
@@ -61,7 +62,7 @@ public class JFrame2_Grid extends javax.swing.JFrame {
         });
         jPanel1.add(jButton1);
 
-        jButton3.setText("jButton1");
+        jButton3.setText("jButton3");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 muestraMensaje(evt);
@@ -69,7 +70,7 @@ public class JFrame2_Grid extends javax.swing.JFrame {
         });
         jPanel1.add(jButton3);
 
-        jButton4.setText("jButton1");
+        jButton4.setText("jButton4");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 muestraMensaje(evt);
@@ -77,7 +78,7 @@ public class JFrame2_Grid extends javax.swing.JFrame {
         });
         jPanel1.add(jButton4);
 
-        jButton5.setText("jButton1");
+        jButton5.setText("jButton5");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 muestraMensaje(evt);
@@ -85,7 +86,7 @@ public class JFrame2_Grid extends javax.swing.JFrame {
         });
         jPanel1.add(jButton5);
 
-        jButton6.setText("jButton1");
+        jButton6.setText("jButton6");
         jButton6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 muestraMensaje(evt);
@@ -93,7 +94,7 @@ public class JFrame2_Grid extends javax.swing.JFrame {
         });
         jPanel1.add(jButton6);
 
-        jButton7.setText("jButton1");
+        jButton7.setText("jButton7");
         jButton7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 muestraMensaje(evt);
@@ -101,7 +102,7 @@ public class JFrame2_Grid extends javax.swing.JFrame {
         });
         jPanel1.add(jButton7);
 
-        jButton8.setText("jButton1");
+        jButton8.setText("jButton8");
         jButton8.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 muestraMensaje(evt);
@@ -109,7 +110,8 @@ public class JFrame2_Grid extends javax.swing.JFrame {
         });
         jPanel1.add(jButton8);
 
-        jButton9.setText("jButton1");
+        jButton9.setText("jButton9");
+        jButton9.setToolTipText("");
         jButton9.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 muestraMensaje(evt);
