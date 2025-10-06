@@ -19,6 +19,14 @@ public class JFrameTable extends javax.swing.JFrame {
      * Creates new form JFrameTable
      */
     DefaultTableModel dtm;
+    
+    public void cargaInicial() {
+        dtm.setRowCount(0);
+        for (Cliente cliente : LogicaNegocio.getClientes()) {
+            dtm.addRow(cliente.devuelveFila());
+        }
+    }
+    
     public JFrameTable() {
         initComponents();
         dtm = new DefaultTableModel();
@@ -47,6 +55,7 @@ public class JFrameTable extends javax.swing.JFrame {
         jButtonCarga = new javax.swing.JButton();
         jButtonAlta = new javax.swing.JButton();
         jButtonBaja = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -106,6 +115,14 @@ public class JFrameTable extends javax.swing.JFrame {
         });
         jPanel2.add(jButtonBaja);
 
+        jButton1.setText("Edita");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButton1);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -148,6 +165,11 @@ public class JFrameTable extends javax.swing.JFrame {
        }
     }//GEN-LAST:event_jButtonBajaActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        JDialogEditaCliente jdec = new JDialogEditaCliente(this, true);
+        jdec.setVisible(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     public void addCliente (Cliente nuevo) {
         LogicaNegocio.addCliente(nuevo);
         dtm.addRow(nuevo.devuelveFila());
@@ -179,6 +201,7 @@ public class JFrameTable extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButtonAlta;
     private javax.swing.JButton jButtonBaja;
     private javax.swing.JButton jButtonCarga;

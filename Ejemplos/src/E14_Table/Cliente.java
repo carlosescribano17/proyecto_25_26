@@ -36,6 +36,22 @@ public class Cliente {
         id = ++contadorID;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public static int getContadorID() {
+        return contadorID;
+    }
+
+    public static void setContadorID(int contadorID) {
+        Cliente.contadorID = contadorID;
+    }
+    
     public String getNombre() {
         return nombre;
     }

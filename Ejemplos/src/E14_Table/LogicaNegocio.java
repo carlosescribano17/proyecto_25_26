@@ -36,6 +36,15 @@ public class LogicaNegocio {
      public static void removeClienteID (int id) {
          
      }
+     
+     public static Cliente getCliente(int id){
+        for (Cliente cliente : listaClientes) {
+            if(cliente.getId()==id){
+            return cliente;
+            }
+        }
+        return null;
+    }
     
     public static void editCliente(int id, Cliente cliente){
         
