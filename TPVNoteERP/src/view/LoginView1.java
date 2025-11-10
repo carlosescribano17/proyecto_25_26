@@ -36,6 +36,7 @@ public class LoginView1 extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Bienvenido " + u.getUsuario() + " (" + u.getRol() + ")");
             dispose(); // Cierra login
             // Aquí abrirías el menú principal (por ahora lo dejamos así)
+            
         } else {
             JOptionPane.showMessageDialog(this, "Usuario o contraseña incorrectos", "Error", JOptionPane.ERROR_MESSAGE);
         }
