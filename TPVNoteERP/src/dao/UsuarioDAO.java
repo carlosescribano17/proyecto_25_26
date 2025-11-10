@@ -10,6 +10,7 @@ import util.ConexionBD;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import org.mindrot.jbcrypt.BCrypt;
 
 /**
  *
@@ -18,22 +19,25 @@ import java.sql.SQLException;
 public class UsuarioDAO {
     public Usuario autenticar(String nombreUsuario, String contrasena) {
         Usuario usuario = null;
-        String sql = "SELECT * FROM empleados WHERE usuario=? AND contrasena=?";
+        String sql = "SELECT * FROM empleados WHERE usuario=?";
 
         try (Connection con = ConexionBD.getConexion();
             PreparedStatement ps = con.prepareStatement(sql)) {
             
             ps.setString(1, nombreUsuario);
-            ps.setString(2, contrasena);
+            //ps.setString(2, contrasena);
             ResultSet rs = ps.executeQuery();
             
             if (rs.next()) {
-                usuario = new Usuario(
+                if(BCrypt.checkpw(contrasena,rs.getString("contrasena"))){
+                       usuario = new Usuario(
                     rs.getInt("id_empleado"),
                     rs.getString("usuario"),
                     rs.getString("contrasena"),
                     rs.getString("rol")
                 );
+                }
+                
             }
         } catch (SQLException e) {
             e.printStackTrace();
