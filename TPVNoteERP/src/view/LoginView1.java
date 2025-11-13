@@ -23,6 +23,8 @@ public class LoginView1 extends javax.swing.JFrame {
      */
     public LoginView1() {
         initComponents();
+        
+        getRootPane().setDefaultButton(btnLogin);
     }
 
     private void autenticar() {
@@ -36,7 +38,8 @@ public class LoginView1 extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Bienvenido " + u.getUsuario() + " (" + u.getRol() + ")");
             dispose(); // Cierra login
             // Aquí abrirías el menú principal (por ahora lo dejamos así)
-            
+            MenuPrincipal menu = new MenuPrincipal(u);
+            menu.setVisible(true);
         } else {
             JOptionPane.showMessageDialog(this, "Usuario o contraseña incorrectos", "Error", JOptionPane.ERROR_MESSAGE);
         }

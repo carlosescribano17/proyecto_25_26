@@ -5,9 +5,13 @@
 package view;
 
 import com.formdev.flatlaf.themes.FlatMacDarkLaf;
+import dao.ProductoDAO;
 import java.awt.CardLayout;
 import javax.swing.JFrame;
 import javax.swing.UIManager;
+import model.Producto;
+import model.Usuario;
+import java.sql.Timestamp;
 
 /**
  *
@@ -18,18 +22,21 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(MenuPrincipal.class.getName());
     
     private CardLayout cardLayout;
-    
+    private Usuario userActual;
     /**
      * Creates new form MenuPrincipal
      */
-    public MenuPrincipal() {
+    public MenuPrincipal(Usuario user) {
         initComponents();
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         
+        this.userActual = user;
         
         
         cardLayout = (CardLayout) jPanelVentanaUnica.getLayout();
         cardLayout.show(jPanelVentanaUnica, "card2");
+        
+        jLabelUsuario.setText("Bienvenid@, "+userActual.getUsuario());
     }
 
     /**
@@ -51,6 +58,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         btnStock = new javax.swing.JButton();
         btnUsuarios = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
+        jLabelUsuario = new javax.swing.JLabel();
         jPanelVentas = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         btnVolverVentas = new javax.swing.JButton();
@@ -60,6 +68,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jPanelArticulos = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         btnVolverArticulos = new javax.swing.JButton();
+        jButtonPruebaUpdate = new javax.swing.JButton();
         jPanelStock = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         btnVolverStock = new javax.swing.JButton();
@@ -124,6 +133,11 @@ public class MenuPrincipal extends javax.swing.JFrame {
         });
         jPanel2.add(btnSalir);
 
+        jLabelUsuario.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabelUsuario.setForeground(new java.awt.Color(238, 238, 238));
+        jLabelUsuario.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelUsuario.setText("Bienvenid@, ");
+
         javax.swing.GroupLayout jPanelPrincipalLayout = new javax.swing.GroupLayout(jPanelPrincipal);
         jPanelPrincipal.setLayout(jPanelPrincipalLayout);
         jPanelPrincipalLayout.setHorizontalGroup(
@@ -131,18 +145,25 @@ public class MenuPrincipal extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelPrincipalLayout.createSequentialGroup()
                 .addGap(14, 14, 14)
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 566, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 807, Short.MAX_VALUE)
+                .addGap(18, 18, Short.MAX_VALUE)
+                .addComponent(jLabelUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 771, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 566, Short.MAX_VALUE)
                 .addGap(16, 16, 16))
         );
         jPanelPrincipalLayout.setVerticalGroup(
             jPanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelPrincipalLayout.createSequentialGroup()
+            .addGroup(jPanelPrincipalLayout.createSequentialGroup()
                 .addGap(14, 14, 14)
-                .addGroup(jPanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 954, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(14, 14, 14))
+                .addGroup(jPanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelPrincipalLayout.createSequentialGroup()
+                        .addComponent(jLabelUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanelPrincipalLayout.createSequentialGroup()
+                        .addGroup(jPanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 954, Short.MAX_VALUE)
+                            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(14, 14, 14))))
         );
 
         jPanelVentanaUnica.add(jPanelPrincipal, "principal");
@@ -224,25 +245,39 @@ public class MenuPrincipal extends javax.swing.JFrame {
             }
         });
 
+        jButtonPruebaUpdate.setText("Actualizar");
+        jButtonPruebaUpdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonPruebaUpdateActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanelArticulosLayout = new javax.swing.GroupLayout(jPanelArticulos);
         jPanelArticulos.setLayout(jPanelArticulosLayout);
         jPanelArticulosLayout.setHorizontalGroup(
             jPanelArticulosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelArticulosLayout.createSequentialGroup()
-                .addGap(268, 268, 268)
-                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(1468, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelArticulosLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnVolverArticulos)
                 .addGap(68, 68, 68))
+            .addGroup(jPanelArticulosLayout.createSequentialGroup()
+                .addGroup(jPanelArticulosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelArticulosLayout.createSequentialGroup()
+                        .addGap(268, 268, 268)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanelArticulosLayout.createSequentialGroup()
+                        .addGap(663, 663, 663)
+                        .addComponent(jButtonPruebaUpdate)))
+                .addContainerGap(1224, Short.MAX_VALUE))
         );
         jPanelArticulosLayout.setVerticalGroup(
             jPanelArticulosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelArticulosLayout.createSequentialGroup()
                 .addGap(105, 105, 105)
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 741, Short.MAX_VALUE)
+                .addGap(266, 266, 266)
+                .addComponent(jButtonPruebaUpdate)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 452, Short.MAX_VALUE)
                 .addComponent(btnVolverArticulos)
                 .addGap(47, 47, 47))
         );
@@ -386,34 +421,41 @@ public class MenuPrincipal extends javax.swing.JFrame {
         cardLayout.show(jPanelVentanaUnica,"usuarios");
     }//GEN-LAST:event_btnUsuariosActionPerformed
 
+    private void jButtonPruebaUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPruebaUpdateActionPerformed
+        // TODO add your handling code here:
+        ProductoDAO pdao = new ProductoDAO();
+        Producto p = new Producto(1, "Stratocaster American Standar II", "Fender", 1899.00, 5, "GUITARRA", "Guitarra eléctrica profesional con pastillas V-Mod II", "https://www.fender.com/cdn-cgi/image/format=auto,resize=height=auto,width=1500/https://www.fmicassets.com/Damroot/eCommPNG/10001/0113900700_fen_ins_frt_1_rr.png", 1, Timestamp.valueOf("2025-11-07 13:42:15"));
+        pdao.actualizar(p);
+    }//GEN-LAST:event_jButtonPruebaUpdateActionPerformed
+
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        try {
-            UIManager.setLookAndFeel(new FlatMacDarkLaf());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new MenuPrincipal().setVisible(true));
-    }
+//    public static void main(String args[]) {
+//        /* Set the Nimbus look and feel */
+//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+//         */
+//        try {
+//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+//                if ("Nimbus".equals(info.getName())) {
+//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+//                    break;
+//                }
+//            }
+//        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
+//            logger.log(java.util.logging.Level.SEVERE, null, ex);
+//        }
+//        //</editor-fold>
+//        try {
+//            UIManager.setLookAndFeel(new FlatMacDarkLaf());
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        /* Create and display the form */
+//        java.awt.EventQueue.invokeLater(() -> new MenuPrincipal().setVisible(true));
+//    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnArticulos;
@@ -427,11 +469,13 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton btnVolverStock;
     private javax.swing.JButton btnVolverUsuarios;
     private javax.swing.JButton btnVolverVentas;
+    private javax.swing.JButton jButtonPruebaUpdate;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabelUsuario;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanelArticulos;
