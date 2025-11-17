@@ -36,4 +36,28 @@ public class ProductoDAO {
         }
         return p;
     }
+    
+    public String[] obtenerNombresColumnas() {
+        String sql = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS "
+                   + "WHERE TABLE_SCHEMA = 'tpv_guitarras' "
+                   + "AND TABLE_NAME = 'productos' "
+                   + "ORDER BY ORDINAL_POSITION";
+
+        try (Connection con = ConexionBD.getConexion();
+             PreparedStatement ps = con.prepareStatement(sql);
+             java.sql.ResultSet rs = ps.executeQuery()) {
+
+            java.util.List<String> columnas = new java.util.ArrayList<>();
+
+            while (rs.next()) {
+                columnas.add(rs.getString("COLUMN_NAME"));
+            }
+
+            return columnas.toArray(new String[0]);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return new String[0];
+    }
+}
 }

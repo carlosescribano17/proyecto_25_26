@@ -12,6 +12,8 @@ import javax.swing.UIManager;
 import model.Producto;
 import model.Usuario;
 import java.sql.Timestamp;
+import java.util.Arrays;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -23,6 +25,8 @@ public class MenuPrincipal extends javax.swing.JFrame {
     
     private CardLayout cardLayout;
     private Usuario userActual;
+    DefaultTableModel dtm;
+    ProductoDAO pdao = new ProductoDAO();
     /**
      * Creates new form MenuPrincipal
      */
@@ -37,6 +41,11 @@ public class MenuPrincipal extends javax.swing.JFrame {
         cardLayout.show(jPanelVentanaUnica, "card2");
         
         jLabelUsuario.setText("Bienvenid@, "+userActual.getUsuario());
+        
+        dtm = new DefaultTableModel();
+        jTableProductos.setModel(dtm);
+        dtm.setColumnIdentifiers(pdao.obtenerNombresColumnas());
+        
     }
 
     /**
@@ -69,6 +78,8 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         btnVolverArticulos = new javax.swing.JButton();
         jButtonPruebaUpdate = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTableProductos = new javax.swing.JTable();
         jPanelStock = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         btnVolverStock = new javax.swing.JButton();
@@ -252,33 +263,47 @@ public class MenuPrincipal extends javax.swing.JFrame {
             }
         });
 
+        jTableProductos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(jTableProductos);
+
         javax.swing.GroupLayout jPanelArticulosLayout = new javax.swing.GroupLayout(jPanelArticulos);
         jPanelArticulos.setLayout(jPanelArticulosLayout);
         jPanelArticulosLayout.setHorizontalGroup(
             jPanelArticulosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelArticulosLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButtonPruebaUpdate)
+                .addGap(76, 76, 76)
                 .addComponent(btnVolverArticulos)
                 .addGap(68, 68, 68))
             .addGroup(jPanelArticulosLayout.createSequentialGroup()
+                .addGap(268, 268, 268)
                 .addGroup(jPanelArticulosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanelArticulosLayout.createSequentialGroup()
-                        .addGap(268, 268, 268)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanelArticulosLayout.createSequentialGroup()
-                        .addGap(663, 663, 663)
-                        .addComponent(jButtonPruebaUpdate)))
-                .addContainerGap(1224, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1560, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(141, Short.MAX_VALUE))
         );
         jPanelArticulosLayout.setVerticalGroup(
             jPanelArticulosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelArticulosLayout.createSequentialGroup()
                 .addGap(105, 105, 105)
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(266, 266, 266)
-                .addComponent(jButtonPruebaUpdate)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 452, Short.MAX_VALUE)
-                .addComponent(btnVolverArticulos)
+                .addGap(49, 49, 49)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 484, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 208, Short.MAX_VALUE)
+                .addGroup(jPanelArticulosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnVolverArticulos)
+                    .addComponent(jButtonPruebaUpdate))
                 .addGap(47, 47, 47))
         );
 
@@ -423,9 +448,10 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
     private void jButtonPruebaUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPruebaUpdateActionPerformed
         // TODO add your handling code here:
-        ProductoDAO pdao = new ProductoDAO();
-        Producto p = new Producto(1, "Stratocaster American Standar II", "Fender", 1899.00, 5, "GUITARRA", "Guitarra eléctrica profesional con pastillas V-Mod II", "https://www.fender.com/cdn-cgi/image/format=auto,resize=height=auto,width=1500/https://www.fmicassets.com/Damroot/eCommPNG/10001/0113900700_fen_ins_frt_1_rr.png", 1, Timestamp.valueOf("2025-11-07 13:42:15"));
-        pdao.actualizar(p);
+        
+        //Producto p = new Producto(1, "Stratocaster American Standar II", "Fender", 1899.00, 5, "GUITARRA", "Guitarra eléctrica profesional con pastillas V-Mod II", "https://www.fender.com/cdn-cgi/image/format=auto,resize=height=auto,width=1500/https://www.fmicassets.com/Damroot/eCommPNG/10001/0113900700_fen_ins_frt_1_rr.png", 1, Timestamp.valueOf("2025-11-07 13:42:15"));
+        //pdao.actualizar(p);
+        //System.out.println(Arrays.toString(pdao.obtenerNombresColumnas()));
     }//GEN-LAST:event_jButtonPruebaUpdateActionPerformed
 
     /**
@@ -485,5 +511,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JPanel jPanelUsuarios;
     private javax.swing.JPanel jPanelVentanaUnica;
     private javax.swing.JPanel jPanelVentas;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTableProductos;
     // End of variables declaration//GEN-END:variables
 }
