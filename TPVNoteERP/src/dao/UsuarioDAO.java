@@ -37,7 +37,7 @@ public class UsuarioDAO {
                     rs.getString("rol")
                 );
                 }
-                
+                //hola buenas
             }
         } catch (SQLException e) {
             e.printStackTrace();
