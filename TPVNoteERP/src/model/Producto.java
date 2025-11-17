@@ -117,6 +117,8 @@ public class Producto {
         this.fecha_alta = fecha_alta;
     }
 
-    
-    
+    @Override
+    public String toString() {
+        return "Producto{" + "id_producto=" + id_producto + ", nombre=" + nombre + ", marca=" + marca + ", precio=" + precio + ", stock=" + stock + ", tipo_producto=" + tipo_producto + ", descripcion=" + descripcion + ", imagen_url=" + imagen_url + ", activo=" + activo + ", fecha_alta=" + fecha_alta + '}';
+    }
 }

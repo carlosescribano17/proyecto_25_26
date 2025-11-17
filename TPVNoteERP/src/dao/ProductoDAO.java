@@ -7,8 +7,12 @@ package dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import javax.swing.JOptionPane;
 import model.Producto;
 import util.ConexionBD;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -58,6 +62,79 @@ public class ProductoDAO {
         } catch (SQLException e) {
             e.printStackTrace();
             return new String[0];
+        }
     }
+    
+    public List<Producto> listarPorTipo(String tipo) {
+    List<Producto> productos = new ArrayList<>();
+    String sql = "SELECT * FROM productos WHERE tipo_producto = ? AND activo = TRUE ORDER BY id_producto";
+    
+    try (Connection conn = ConexionBD.getConexion();
+         PreparedStatement ps = conn.prepareStatement(sql)) {
+        
+        ps.setString(1, tipo);
+        ResultSet rs = ps.executeQuery();
+        
+        while (rs.next()) {
+            Producto p = new Producto();
+            p.setId_producto(rs.getInt("id_producto"));
+            p.setNombre(rs.getString("nombre"));
+            p.setMarca(rs.getString("marca"));
+            p.setPrecio(rs.getDouble("precio"));
+            p.setStock(rs.getInt("stock"));
+            p.setTipo_producto(rs.getString("tipo_producto"));
+            p.setDescripcion(rs.getString("descripcion"));
+            p.setImagen_url(rs.getString("imagen_url"));
+            p.setActivo(rs.getInt("activo"));
+            p.setFecha_alta(rs.getTimestamp("fecha_alta"));
+            
+            System.out.println(p.toString());
+            productos.add(p);
+        }
+        
+    } catch (SQLException e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(null, 
+            "Error al listar productos por tipo: " + e.getMessage(),
+            "Error BD", JOptionPane.ERROR_MESSAGE);
+    }
+    
+    return productos;
 }
+    
+    public List<Producto> listarTodos() {
+    List<Producto> productos = new ArrayList<>();
+    String sql = "SELECT * FROM productos WHERE activo = TRUE ORDER BY id_producto";
+    
+    try (Connection conn = ConexionBD.getConexion();
+         PreparedStatement ps = conn.prepareStatement(sql)) {
+        
+        ResultSet rs = ps.executeQuery();
+        
+        while (rs.next()) {
+            Producto p = new Producto();
+            p.setId_producto(rs.getInt("id_producto"));
+            p.setNombre(rs.getString("nombre"));
+            p.setMarca(rs.getString("marca"));
+            p.setPrecio(rs.getDouble("precio"));
+            p.setStock(rs.getInt("stock"));
+            p.setTipo_producto(rs.getString("tipo_producto"));
+            p.setDescripcion(rs.getString("descripcion"));
+            p.setImagen_url(rs.getString("imagen_url"));
+            p.setActivo(rs.getInt("activo"));
+            p.setFecha_alta(rs.getTimestamp("fecha_alta"));
+            productos.add(p);
+        }
+        
+    } catch (SQLException e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(null, 
+            "Error al listar productos: " + e.getMessage(),
+            "Error BD", JOptionPane.ERROR_MESSAGE);
+        }
+    
+    return productos;
+    }
+    
+    
 }

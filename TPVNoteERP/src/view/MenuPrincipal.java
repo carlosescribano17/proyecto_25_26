@@ -27,6 +27,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private Usuario userActual;
     DefaultTableModel dtm;
     ProductoDAO pdao = new ProductoDAO();
+    private boolean comboListo = false;
     /**
      * Creates new form MenuPrincipal
      */
@@ -44,10 +45,54 @@ public class MenuPrincipal extends javax.swing.JFrame {
         
         dtm = new DefaultTableModel();
         jTableProductos.setModel(dtm);
+        jTableProductos.setAutoCreateRowSorter(false);
         dtm.setColumnIdentifiers(pdao.obtenerNombresColumnas());
         
+        comboListo = true;
     }
+    
+//    private void inicializarComboBoxTipoProducto() {
+//        jComboBoxTipoProducto.addItem("TODOS");
+//        jComboBoxTipoProducto.addItem("GUITARRA");
+//        jComboBoxTipoProducto.addItem("AMPLIFICADOR");
+//        jComboBoxTipoProducto.addItem("ACCESORIO");
+//
+//        // Listener para cuando cambie la selección
+//        jComboBoxTipoProducto.addActionListener(evt -> {
+//            cargarProductosPorTipo();
+//        });
+//    }
 
+    private void cargarProductosPorTipo() {
+    // Limpiar la tabla
+        dtm.setRowCount(0);
+
+        String tipoSeleccionado = (String) jComboBoxTipoProducto.getSelectedItem();
+
+        java.util.List<Producto> productos;
+        if ("TODOS".equals(tipoSeleccionado)) {
+            productos = pdao.listarTodos();
+        } else {
+            productos = pdao.listarPorTipo(tipoSeleccionado);
+        }
+
+        // Agregar productos a la tabla
+        for (Producto p : productos) {
+            Object[] fila = new Object[]{
+                p.getId_producto(),
+                p.getNombre(),
+                p.getMarca(),
+                p.getPrecio(),
+                p.getStock(),
+                p.getTipo_producto(),
+                p.getDescripcion(),
+                p.getImagen_url(),
+                p.getActivo(),
+                p.getFecha_alta()
+            };
+            dtm.addRow(fila);
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -80,6 +125,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jButtonPruebaUpdate = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableProductos = new javax.swing.JTable();
+        jComboBoxTipoProducto = new javax.swing.JComboBox<>();
         jPanelStock = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         btnVolverStock = new javax.swing.JButton();
@@ -276,6 +322,13 @@ public class MenuPrincipal extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(jTableProductos);
 
+        jComboBoxTipoProducto.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "TODOS", "GUITARRA", "AMPLIFICADOR", "ACCESORIO" }));
+        jComboBoxTipoProducto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxTipoProductoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanelArticulosLayout = new javax.swing.GroupLayout(jPanelArticulos);
         jPanelArticulos.setLayout(jPanelArticulosLayout);
         jPanelArticulosLayout.setHorizontalGroup(
@@ -290,14 +343,19 @@ public class MenuPrincipal extends javax.swing.JFrame {
                 .addGap(268, 268, 268)
                 .addGroup(jPanelArticulosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1560, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanelArticulosLayout.createSequentialGroup()
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(510, 510, 510)
+                        .addComponent(jComboBoxTipoProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 317, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(141, Short.MAX_VALUE))
         );
         jPanelArticulosLayout.setVerticalGroup(
             jPanelArticulosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelArticulosLayout.createSequentialGroup()
                 .addGap(105, 105, 105)
-                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanelArticulosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboBoxTipoProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(49, 49, 49)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 484, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 208, Short.MAX_VALUE)
@@ -419,6 +477,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
     private void btnArticulosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnArticulosActionPerformed
         cardLayout.show(jPanelVentanaUnica,"articulos");
+        cargarProductosPorTipo();
     }//GEN-LAST:event_btnArticulosActionPerformed
 
     private void btnVolverArticulosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverArticulosActionPerformed
@@ -453,6 +512,11 @@ public class MenuPrincipal extends javax.swing.JFrame {
         //pdao.actualizar(p);
         //System.out.println(Arrays.toString(pdao.obtenerNombresColumnas()));
     }//GEN-LAST:event_jButtonPruebaUpdateActionPerformed
+
+    private void jComboBoxTipoProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxTipoProductoActionPerformed
+        if(!comboListo) return;
+        cargarProductosPorTipo();
+    }//GEN-LAST:event_jComboBoxTipoProductoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -496,6 +560,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton btnVolverUsuarios;
     private javax.swing.JButton btnVolverVentas;
     private javax.swing.JButton jButtonPruebaUpdate;
+    private javax.swing.JComboBox<String> jComboBoxTipoProducto;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
