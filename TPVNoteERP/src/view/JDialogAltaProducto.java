@@ -165,6 +165,7 @@ public class JDialogAltaProducto extends javax.swing.JDialog {
                  if (pdao.crear(nuevo)) {
                     dispose();
                     jframepadre.cargarProductosPorTipo();
+                    JOptionPane.showMessageDialog(this, "Producto creado correctamente");
                 } else {
                     JOptionPane.showMessageDialog(this,
                             "Error al crear el producto.",
