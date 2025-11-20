@@ -29,6 +29,8 @@ public class MenuPrincipal extends javax.swing.JFrame {
     DefaultTableModel dtm;
     ProductoDAO pdao = new ProductoDAO();
     private boolean comboListo = false;
+    private java.util.Set<Integer> filasModificadas = new java.util.HashSet<>();
+
     /**
      * Creates new form MenuPrincipal
      */
@@ -44,11 +46,34 @@ public class MenuPrincipal extends javax.swing.JFrame {
         
         jLabelUsuario.setText("Bienvenid@, "+userActual.getUsuario());
         
-        dtm = new DefaultTableModel();
+        dtm = new DefaultTableModel(pdao.obtenerNombresColumnas(), 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return true;
+            }
+        };
         jTableProductos.setModel(dtm);
+        dtm.addTableModelListener(e -> { //habilita el botón en cuanto haya un cambio en la tabla
+            if (e.getType() == javax.swing.event.TableModelEvent.UPDATE) {
+                int fila = e.getFirstRow();
+
+                filasModificadas.add(fila);
+
+                if (filasModificadas.size() == 1) {
+                    jButtonModificar.setEnabled(true);
+                } else {
+                    jButtonModificar.setEnabled(false);
+                    JOptionPane.showMessageDialog(this,
+                            "Solo puedes modificar una fila a la vez.",
+                            "Aviso",
+                            JOptionPane.WARNING_MESSAGE);
+                    cargarProductosPorTipo();        
+                    }
+            }
+        });
         jTableProductos.setAutoCreateRowSorter(false);
         dtm.setColumnIdentifiers(pdao.obtenerNombresColumnas());
-        
+        jButtonModificar.setEnabled(false);
         comboListo = true;
     }
     
@@ -64,7 +89,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
 //        });
 //    }
 
-    private void cargarProductosPorTipo() {
+    public void cargarProductosPorTipo() {
     // Limpiar la tabla
         dtm.setRowCount(0);
 
@@ -93,6 +118,8 @@ public class MenuPrincipal extends javax.swing.JFrame {
             };
             dtm.addRow(fila);
         }
+        filasModificadas.clear();
+        jButtonModificar.setEnabled(false);
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -127,6 +154,8 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableProductos = new javax.swing.JTable();
         jComboBoxTipoProducto = new javax.swing.JComboBox<>();
+        jButtonModificar = new javax.swing.JButton();
+        jButtonNuevo = new javax.swing.JButton();
         jPanelStock = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         btnVolverStock = new javax.swing.JButton();
@@ -330,12 +359,30 @@ public class MenuPrincipal extends javax.swing.JFrame {
             }
         });
 
+        jButtonModificar.setText("Modificar");
+        jButtonModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonModificarActionPerformed(evt);
+            }
+        });
+
+        jButtonNuevo.setText("Nuevo");
+        jButtonNuevo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonNuevoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanelArticulosLayout = new javax.swing.GroupLayout(jPanelArticulos);
         jPanelArticulos.setLayout(jPanelArticulosLayout);
         jPanelArticulosLayout.setHorizontalGroup(
             jPanelArticulosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelArticulosLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButtonNuevo)
+                .addGap(55, 55, 55)
+                .addComponent(jButtonModificar)
+                .addGap(51, 51, 51)
                 .addComponent(jButtonBorrar)
                 .addGap(76, 76, 76)
                 .addComponent(btnVolverArticulos)
@@ -362,7 +409,9 @@ public class MenuPrincipal extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 208, Short.MAX_VALUE)
                 .addGroup(jPanelArticulosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnVolverArticulos)
-                    .addComponent(jButtonBorrar))
+                    .addComponent(jButtonBorrar)
+                    .addComponent(jButtonModificar)
+                    .addComponent(jButtonNuevo))
                 .addGap(47, 47, 47))
         );
 
@@ -546,6 +595,46 @@ public class MenuPrincipal extends javax.swing.JFrame {
         cargarProductosPorTipo();
     }//GEN-LAST:event_jComboBoxTipoProductoActionPerformed
 
+    private void jButtonModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonModificarActionPerformed
+        int fila = jTableProductos.getSelectedRow();
+
+        if (fila == -1) {
+            JOptionPane.showMessageDialog(this, "Selecciona un producto para modificar.", "Aviso", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        try {
+            Producto p = new Producto();
+            p.setId_producto((int) dtm.getValueAt(fila, 0));
+            p.setNombre((String) dtm.getValueAt(fila, 1));
+            p.setMarca((String) dtm.getValueAt(fila, 2));
+            p.setPrecio(Double.parseDouble(dtm.getValueAt(fila, 3).toString()));
+            p.setStock(Integer.parseInt(dtm.getValueAt(fila, 4).toString()));
+            p.setTipo_producto((String) dtm.getValueAt(fila, 5));
+            p.setDescripcion((String) dtm.getValueAt(fila, 6));
+            p.setImagen_url((String) dtm.getValueAt(fila, 7));
+            p.setActivo(Integer.parseInt(dtm.getValueAt(fila, 8).toString()));
+
+            pdao.actualizar(p);
+
+            JOptionPane.showMessageDialog(this, "Producto modificado correctamente.");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, 
+                "Error al modificar el producto: " + e.getMessage(),
+                "Error",
+                JOptionPane.ERROR_MESSAGE);
+        }
+        filasModificadas.clear();
+        jButtonModificar.setEnabled(false);
+    }//GEN-LAST:event_jButtonModificarActionPerformed
+
+    private void jButtonNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNuevoActionPerformed
+        JDialogAltaProducto jdp = new JDialogAltaProducto(this, true);
+        jdp.setVisible(true);
+    }//GEN-LAST:event_jButtonNuevoActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -588,6 +677,8 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton btnVolverUsuarios;
     private javax.swing.JButton btnVolverVentas;
     private javax.swing.JButton jButtonBorrar;
+    private javax.swing.JButton jButtonModificar;
+    private javax.swing.JButton jButtonNuevo;
     private javax.swing.JComboBox<String> jComboBoxTipoProducto;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

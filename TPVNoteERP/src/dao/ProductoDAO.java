@@ -149,6 +149,33 @@ public class ProductoDAO {
             return false;
         }
     }
+    
+    public boolean crear(Producto p) {
+        String sql = "INSERT INTO productos (nombre, marca, precio, stock, tipo_producto, descripcion, imagen_url, activo, fecha_alta) "
+                   + "VALUES (?, ?, ?, ?, ?, ?, ?, 1, NOW())";
+
+        try (Connection con = ConexionBD.getConexion();
+             PreparedStatement ps = con.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
+
+            ps.setString(1, p.getNombre());
+            ps.setString(2, p.getMarca());
+            ps.setDouble(3, p.getPrecio());
+            ps.setInt(4, p.getStock());
+            ps.setString(5, p.getTipo_producto());
+            ps.setString(6, p.getDescripcion());
+            ps.setString(7, p.getImagen_url());
+
+            return ps.executeUpdate() > 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null,
+                "Error al crear producto: " + e.getMessage(),
+                "Error BD",
+                JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+    }
 
     
 }
