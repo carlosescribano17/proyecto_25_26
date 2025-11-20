@@ -136,5 +136,19 @@ public class ProductoDAO {
     return productos;
     }
     
+    public boolean borrar(int idProducto) {
+        String sql = "DELETE FROM productos WHERE id_producto = ?";
+        try (Connection con = ConexionBD.getConexion();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setInt(1, idProducto);
+            return ps.executeUpdate() > 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
     
 }

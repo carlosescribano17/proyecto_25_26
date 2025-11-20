@@ -13,6 +13,7 @@ import model.Producto;
 import model.Usuario;
 import java.sql.Timestamp;
 import java.util.Arrays;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -122,7 +123,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jPanelArticulos = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         btnVolverArticulos = new javax.swing.JButton();
-        jButtonPruebaUpdate = new javax.swing.JButton();
+        jButtonBorrar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableProductos = new javax.swing.JTable();
         jComboBoxTipoProducto = new javax.swing.JComboBox<>();
@@ -302,10 +303,10 @@ public class MenuPrincipal extends javax.swing.JFrame {
             }
         });
 
-        jButtonPruebaUpdate.setText("Actualizar");
-        jButtonPruebaUpdate.addActionListener(new java.awt.event.ActionListener() {
+        jButtonBorrar.setText("Borrar");
+        jButtonBorrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonPruebaUpdateActionPerformed(evt);
+                jButtonBorrarActionPerformed(evt);
             }
         });
 
@@ -335,7 +336,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
             jPanelArticulosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelArticulosLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButtonPruebaUpdate)
+                .addComponent(jButtonBorrar)
                 .addGap(76, 76, 76)
                 .addComponent(btnVolverArticulos)
                 .addGap(68, 68, 68))
@@ -361,7 +362,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 208, Short.MAX_VALUE)
                 .addGroup(jPanelArticulosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnVolverArticulos)
-                    .addComponent(jButtonPruebaUpdate))
+                    .addComponent(jButtonBorrar))
                 .addGap(47, 47, 47))
         );
 
@@ -505,13 +506,40 @@ public class MenuPrincipal extends javax.swing.JFrame {
         cardLayout.show(jPanelVentanaUnica,"usuarios");
     }//GEN-LAST:event_btnUsuariosActionPerformed
 
-    private void jButtonPruebaUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPruebaUpdateActionPerformed
-        // TODO add your handling code here:
-        
-        //Producto p = new Producto(1, "Stratocaster American Standar II", "Fender", 1899.00, 5, "GUITARRA", "Guitarra eléctrica profesional con pastillas V-Mod II", "https://www.fender.com/cdn-cgi/image/format=auto,resize=height=auto,width=1500/https://www.fmicassets.com/Damroot/eCommPNG/10001/0113900700_fen_ins_frt_1_rr.png", 1, Timestamp.valueOf("2025-11-07 13:42:15"));
-        //pdao.actualizar(p);
-        //System.out.println(Arrays.toString(pdao.obtenerNombresColumnas()));
-    }//GEN-LAST:event_jButtonPruebaUpdateActionPerformed
+    private void jButtonBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBorrarActionPerformed
+        int[] filas = jTableProductos.getSelectedRows();
+
+        if (filas.length == 0) {
+            JOptionPane.showMessageDialog(this, "Selecciona al menos un producto.", "Aviso", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        int confirm = JOptionPane.showConfirmDialog(
+                this,
+                "¿Seguro que deseas borrar los productos seleccionados?",
+                "Confirmar borrado",
+                JOptionPane.YES_NO_OPTION
+        );
+
+        if (confirm != JOptionPane.YES_OPTION) return;
+
+        for (int i = filas.length - 1; i >= 0; i--) {
+
+            int fila = filas[i];
+            int idProducto = (int) jTableProductos.getValueAt(fila, 0);
+
+            if (pdao.borrar(idProducto)) {
+                dtm.removeRow(fila);
+            } else {
+                JOptionPane.showMessageDialog(this,
+                        "Error al borrar el producto con ID: " + idProducto,
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE);
+            }
+        }
+
+        JOptionPane.showMessageDialog(this, "Productos borrados correctamente");
+    }//GEN-LAST:event_jButtonBorrarActionPerformed
 
     private void jComboBoxTipoProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxTipoProductoActionPerformed
         if(!comboListo) return;
@@ -559,7 +587,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton btnVolverStock;
     private javax.swing.JButton btnVolverUsuarios;
     private javax.swing.JButton btnVolverVentas;
-    private javax.swing.JButton jButtonPruebaUpdate;
+    private javax.swing.JButton jButtonBorrar;
     private javax.swing.JComboBox<String> jComboBoxTipoProducto;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
