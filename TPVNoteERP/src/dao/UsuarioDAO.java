@@ -10,6 +10,7 @@ import util.ConexionBD;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import javax.swing.JOptionPane;
 import org.mindrot.jbcrypt.BCrypt;
 
 /**
@@ -41,6 +42,7 @@ public class UsuarioDAO {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos", "Error", JOptionPane.ERROR_MESSAGE);
         }
         return usuario;
     }
