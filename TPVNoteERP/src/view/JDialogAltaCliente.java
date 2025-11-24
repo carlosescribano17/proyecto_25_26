@@ -64,7 +64,7 @@ public class JDialogAltaCliente extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel1.setText("ALTA PRODUCTO");
+        jLabel1.setText("ALTA CLIENTE");
 
         jPanel2.setLayout(new java.awt.GridLayout(6, 2, 10, 10));
 
