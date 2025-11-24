@@ -6,11 +6,8 @@ package view;
 
 
 import dao.ClienteDAO;
-import dao.ProductoDAO;
-import java.util.Date;
 import javax.swing.JOptionPane;
 import model.Cliente;
-import model.Producto;
 
 /**
  *
@@ -18,7 +15,7 @@ import model.Producto;
  */
 public class JDialogAltaCliente extends javax.swing.JDialog {
     
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(JDialogAltaProducto.class.getName());
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(JDialogAltaCliente.class.getName());
 
     /**
      * Creates new form JDialogAltaCliente
@@ -41,7 +38,7 @@ public class JDialogAltaCliente extends javax.swing.JDialog {
 
         jLabelNombre = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
+        jLabelC = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jTextFieldNombreCliente = new javax.swing.JTextField();
@@ -63,8 +60,8 @@ public class JDialogAltaCliente extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel1.setText("ALTA CLIENTE");
+        jLabelC.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabelC.setText("ALTA CLIENTE");
 
         jPanel2.setLayout(new java.awt.GridLayout(6, 2, 10, 10));
 
@@ -118,14 +115,14 @@ public class JDialogAltaCliente extends javax.swing.JDialog {
                 .addGap(35, 35, 35))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabelC, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(21, 21, 21)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabelC, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 358, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -205,13 +202,13 @@ public class JDialogAltaCliente extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonEnviarC;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabelC;
     private javax.swing.JLabel jLabelNombre;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JTextField jTextField1;
