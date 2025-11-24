@@ -5,6 +5,7 @@
 package view;
 
 import com.formdev.flatlaf.themes.FlatMacDarkLaf;
+import dao.ClienteDAO;
 import dao.ProductoDAO;
 import java.awt.CardLayout;
 import javax.swing.JFrame;
@@ -13,8 +14,10 @@ import model.Producto;
 import model.Usuario;
 import java.sql.Timestamp;
 import java.util.Arrays;
+import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import model.Cliente;
 
 /**
  *
@@ -27,9 +30,13 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private CardLayout cardLayout;
     private Usuario userActual;
     DefaultTableModel dtm;
+    DefaultTableModel dtmc;
     ProductoDAO pdao = new ProductoDAO();
+    ClienteDAO cdao = new ClienteDAO();
     private boolean comboListo = false;
     private java.util.Set<Integer> filasModificadas = new java.util.HashSet<>();
+    private java.util.Set<Integer> filasModificadasCliente = new java.util.HashSet<>();
+    private boolean cargandoTablas = false;
 
     /**
      * Creates new form MenuPrincipal
@@ -52,8 +59,18 @@ public class MenuPrincipal extends javax.swing.JFrame {
                 return true;
             }
         };
+        
+        dtmc = new DefaultTableModel(cdao.obtenerNombresColumnas(), 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return true;
+            }
+        };
+        
+        jTableClientes.setModel(dtmc);
         jTableProductos.setModel(dtm);
         dtm.addTableModelListener(e -> { //habilita el botón en cuanto haya un cambio en la tabla
+            if (cargandoTablas) return;
             if (e.getType() == javax.swing.event.TableModelEvent.UPDATE) {
                 int fila = e.getFirstRow();
 
@@ -71,9 +88,31 @@ public class MenuPrincipal extends javax.swing.JFrame {
                     }
             }
         });
+        dtmc.addTableModelListener(e -> { //habilita el botón en cuanto haya un cambio en la tabla
+            if (cargandoTablas) return;
+            if (e.getType() == javax.swing.event.TableModelEvent.UPDATE) {
+                int fila = e.getFirstRow();
+
+                filasModificadasCliente.add(fila);
+
+                if (filasModificadasCliente.size() == 1) {
+                    jButtonModificarClient.setEnabled(true);
+                } else {
+                    jButtonModificarClient.setEnabled(false);
+                    JOptionPane.showMessageDialog(this,
+                            "Solo puedes modificar una fila a la vez.",
+                            "Aviso",
+                            JOptionPane.WARNING_MESSAGE);
+                    cargarClientes();        
+                    }
+            }
+        });
         jTableProductos.setAutoCreateRowSorter(false);
+        jTableClientes.setAutoCreateRowSorter(false);
         dtm.setColumnIdentifiers(pdao.obtenerNombresColumnas());
+        dtmc.setColumnIdentifiers(cdao.obtenerNombresColumnas());
         jButtonModificar.setEnabled(false);
+        jButtonModificarClient.setEnabled(false);
         comboListo = true;
     }
     
@@ -90,8 +129,9 @@ public class MenuPrincipal extends javax.swing.JFrame {
 //    }
 
     public void cargarProductosPorTipo() {
-    // Limpiar la tabla
-        dtm.setRowCount(0);
+        cargandoTablas = true;
+// Limpiar la tabla        
+    dtm.setRowCount(0);
 
         String tipoSeleccionado = (String) jComboBoxTipoProducto.getSelectedItem();
 
@@ -120,7 +160,35 @@ public class MenuPrincipal extends javax.swing.JFrame {
         }
         filasModificadas.clear();
         jButtonModificar.setEnabled(false);
+        cargandoTablas = false;
     }
+    
+    public void cargarClientes() {
+        cargandoTablas = true;
+    // Limpiar la tabla
+    dtmc.setRowCount(0);
+
+    List<Cliente> clientes = cdao.obtenerTodos();
+
+    // Agregar clientes a la tabla
+    for (Cliente c : clientes) {
+        Object[] fila = new Object[]{
+            c.getIdCliente(),
+            c.getDni(),
+            c.getNombre(),
+            c.getApellidos(),
+            c.getTelefono(),
+            c.getEmail(),
+            c.getDireccion(),
+            c.getFecha_alta()
+        };
+        dtmc.addRow(fila);
+    }
+    cargandoTablas = false;
+    // Si estás usando control de filas modificadas
+    filasModificadasCliente.clear();
+    jButtonModificarClient.setEnabled(false);
+}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -147,6 +215,11 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jPanelClientes = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         btnVolverClientes = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTableClientes = new javax.swing.JTable();
+        jButtonModificarClient = new javax.swing.JButton();
+        jButtonNuevoClient = new javax.swing.JButton();
+        jButtonBorrarClient = new javax.swing.JButton();
         jPanelArticulos = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         btnVolverArticulos = new javax.swing.JButton();
@@ -289,7 +362,9 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
         jPanelVentanaUnica.add(jPanelVentas, "ventas");
 
-        jLabel2.setText("Clientes");
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("CLIENTES");
 
         btnVolverClientes.setText("Volver");
         btnVolverClientes.addActionListener(new java.awt.event.ActionListener() {
@@ -298,27 +373,86 @@ public class MenuPrincipal extends javax.swing.JFrame {
             }
         });
 
+        jTableClientes.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane2.setViewportView(jTableClientes);
+
+        jButtonModificarClient.setText("Modificar");
+        jButtonModificarClient.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonModificarClientActionPerformed(evt);
+            }
+        });
+
+        jButtonNuevoClient.setText("Nuevo");
+        jButtonNuevoClient.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonNuevoClientActionPerformed(evt);
+            }
+        });
+
+        jButtonBorrarClient.setText("Borrar");
+        jButtonBorrarClient.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonBorrarClientActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanelClientesLayout = new javax.swing.GroupLayout(jPanelClientes);
         jPanelClientes.setLayout(jPanelClientesLayout);
         jPanelClientesLayout.setHorizontalGroup(
             jPanelClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelClientesLayout.createSequentialGroup()
-                .addGap(268, 268, 268)
+                .addGap(110, 110, 110)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(1468, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelClientesLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnVolverClientes)
-                .addGap(68, 68, 68))
+                .addContainerGap(1358, Short.MAX_VALUE)
+                .addGroup(jPanelClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelClientesLayout.createSequentialGroup()
+                        .addComponent(btnVolverClientes)
+                        .addGap(68, 68, 68))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelClientesLayout.createSequentialGroup()
+                        .addComponent(jButtonNuevoClient)
+                        .addGap(55, 55, 55)
+                        .addComponent(jButtonModificarClient)
+                        .addGap(62, 62, 62)
+                        .addComponent(jButtonBorrarClient)
+                        .addGap(269, 269, 269))))
+            .addGroup(jPanelClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanelClientesLayout.createSequentialGroup()
+                    .addGap(204, 204, 204)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 1560, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(205, Short.MAX_VALUE)))
         );
         jPanelClientesLayout.setVerticalGroup(
             jPanelClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelClientesLayout.createSequentialGroup()
-                .addGap(105, 105, 105)
+                .addGap(43, 43, 43)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 741, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 716, Short.MAX_VALUE)
+                .addGroup(jPanelClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonBorrarClient)
+                    .addGroup(jPanelClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jButtonModificarClient)
+                        .addComponent(jButtonNuevoClient)))
+                .addGap(64, 64, 64)
                 .addComponent(btnVolverClientes)
                 .addGap(47, 47, 47))
+            .addGroup(jPanelClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanelClientesLayout.createSequentialGroup()
+                    .addGap(133, 133, 133)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 484, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(365, Short.MAX_VALUE)))
         );
 
         jPanelVentanaUnica.add(jPanelClientes, "clientes");
@@ -502,6 +636,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private void btnClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClientesActionPerformed
         // TODO add your handling code here:
         cardLayout.show(jPanelVentanaUnica,"clientes");
+        cargarClientes();
     }//GEN-LAST:event_btnClientesActionPerformed
 
     private void btnVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVentasActionPerformed
@@ -635,6 +770,79 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jdp.setVisible(true);
     }//GEN-LAST:event_jButtonNuevoActionPerformed
 
+    private void jButtonModificarClientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonModificarClientActionPerformed
+        int fila = jTableClientes.getSelectedRow();
+
+        if (fila == -1) {
+            JOptionPane.showMessageDialog(this, "Selecciona un cliente para modificar.", "Aviso", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        try {
+            Cliente c = new Cliente();
+            c.setIdCliente((int) dtmc.getValueAt(fila, 0));
+            c.setDni((String) dtmc.getValueAt(fila, 1));
+            c.setNombre((String) dtmc.getValueAt(fila, 2));
+            c.setApellidos((String) dtmc.getValueAt(fila, 3));
+            c.setTelefono((String)(dtmc.getValueAt(fila, 4)));
+            c.setEmail((String) (dtmc.getValueAt(fila, 5)));
+            c.setDireccion((String) dtmc.getValueAt(fila, 6));
+            c.setFecha_alta((Timestamp) dtmc.getValueAt(fila, 7));
+            
+            cdao.actualizar(c);
+
+            JOptionPane.showMessageDialog(this, "Cliente modificado correctamente.");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, 
+                "Error al modificar el cliente: " + e.getMessage(),
+                "Error",
+                JOptionPane.ERROR_MESSAGE);
+        }
+        filasModificadasCliente.clear();
+        jButtonModificarClient.setEnabled(false);
+    }//GEN-LAST:event_jButtonModificarClientActionPerformed
+
+    private void jButtonNuevoClientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNuevoClientActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonNuevoClientActionPerformed
+
+    private void jButtonBorrarClientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBorrarClientActionPerformed
+       int[] filas = jTableClientes.getSelectedRows();
+
+        if (filas.length == 0) {
+            JOptionPane.showMessageDialog(this, "Selecciona al menos un cliente.", "Aviso", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        int confirm = JOptionPane.showConfirmDialog(
+                this,
+                "¿Seguro que deseas borrar los clientes seleccionados?",
+                "Confirmar borrado",
+                JOptionPane.YES_NO_OPTION
+        );
+
+        if (confirm != JOptionPane.YES_OPTION) return;
+
+        for (int i = filas.length - 1; i >= 0; i--) {
+
+            int fila = filas[i];
+            int idCliente = (int) jTableClientes.getValueAt(fila, 0);
+
+            if (cdao.eliminar(idCliente)) {
+                dtmc.removeRow(fila);
+            } else {
+                JOptionPane.showMessageDialog(this,
+                        "Error al borrar el cliente con ID: " + idCliente,
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE);
+            }
+        }
+
+        JOptionPane.showMessageDialog(this, "Clientes borrados correctamente");
+    }//GEN-LAST:event_jButtonBorrarClientActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -677,8 +885,11 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton btnVolverUsuarios;
     private javax.swing.JButton btnVolverVentas;
     private javax.swing.JButton jButtonBorrar;
+    private javax.swing.JButton jButtonBorrarClient;
     private javax.swing.JButton jButtonModificar;
+    private javax.swing.JButton jButtonModificarClient;
     private javax.swing.JButton jButtonNuevo;
+    private javax.swing.JButton jButtonNuevoClient;
     private javax.swing.JComboBox<String> jComboBoxTipoProducto;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -696,6 +907,8 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JPanel jPanelVentanaUnica;
     private javax.swing.JPanel jPanelVentas;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable jTableClientes;
     private javax.swing.JTable jTableProductos;
     // End of variables declaration//GEN-END:variables
 }
