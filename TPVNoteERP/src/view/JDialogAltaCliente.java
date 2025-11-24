@@ -5,9 +5,11 @@
 package view;
 
 
+import dao.ClienteDAO;
 import dao.ProductoDAO;
 import java.util.Date;
 import javax.swing.JOptionPane;
+import model.Cliente;
 import model.Producto;
 
 /**
@@ -42,20 +44,18 @@ public class JDialogAltaCliente extends javax.swing.JDialog {
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        jTextFieldNombre = new javax.swing.JTextField();
+        jTextFieldNombreCliente = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jTextFieldMarca = new javax.swing.JTextField();
+        jTextFieldApellidoCliente = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        jComboBoxTipoProd = new javax.swing.JComboBox<>();
+        jTextFieldDNICliente = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        jSpinnerPrecio = new javax.swing.JSpinner();
-        jLabel6 = new javax.swing.JLabel();
-        jSpinnerStock = new javax.swing.JSpinner();
+        jTextFieldTelefonoCliente = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        jTextFieldDescripción = new javax.swing.JTextField();
+        jTextFieldEmailCliente = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
-        jTextFieldImagenURL = new javax.swing.JTextField();
-        jButtonEnviar = new javax.swing.JButton();
+        jTextFieldDireccionCliente = new javax.swing.JTextField();
+        jButtonEnviarC = new javax.swing.JButton();
 
         jLabelNombre.setText("Nombre");
 
@@ -66,52 +66,42 @@ public class JDialogAltaCliente extends javax.swing.JDialog {
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setText("ALTA PRODUCTO");
 
-        jPanel2.setLayout(new java.awt.GridLayout(8, 2, 10, 10));
+        jPanel2.setLayout(new java.awt.GridLayout(6, 2, 10, 10));
 
         jLabel2.setText("Nombre");
         jPanel2.add(jLabel2);
-        jPanel2.add(jTextFieldNombre);
+        jPanel2.add(jTextFieldNombreCliente);
 
-        jLabel3.setText("Marca");
+        jLabel3.setText("Apellidos");
         jPanel2.add(jLabel3);
 
-        jTextFieldMarca.addActionListener(new java.awt.event.ActionListener() {
+        jTextFieldApellidoCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldMarcaActionPerformed(evt);
+                jTextFieldApellidoClienteActionPerformed(evt);
             }
         });
-        jPanel2.add(jTextFieldMarca);
+        jPanel2.add(jTextFieldApellidoCliente);
 
-        jLabel4.setText("Tipo de Producto");
+        jLabel4.setText("DNI");
         jPanel2.add(jLabel4);
+        jPanel2.add(jTextFieldDNICliente);
 
-        jComboBoxTipoProd.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "GUITARRA", "AMPLIFICADOR", "ACCESORIO" }));
-        jPanel2.add(jComboBoxTipoProd);
-
-        jLabel5.setText("Precio");
+        jLabel5.setText("Teléfono");
         jPanel2.add(jLabel5);
+        jPanel2.add(jTextFieldTelefonoCliente);
 
-        jSpinnerPrecio.setModel(new javax.swing.SpinnerNumberModel(0.0d, 0.0d, null, 1.0d));
-        jPanel2.add(jSpinnerPrecio);
-
-        jLabel6.setText("Stock");
-        jPanel2.add(jLabel6);
-
-        jSpinnerStock.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
-        jPanel2.add(jSpinnerStock);
-
-        jLabel7.setText("Descripción");
+        jLabel7.setText("Email");
         jPanel2.add(jLabel7);
-        jPanel2.add(jTextFieldDescripción);
+        jPanel2.add(jTextFieldEmailCliente);
 
-        jLabel8.setText("Imagen URL");
+        jLabel8.setText("Dirección");
         jPanel2.add(jLabel8);
-        jPanel2.add(jTextFieldImagenURL);
+        jPanel2.add(jTextFieldDireccionCliente);
 
-        jButtonEnviar.setText("Enviar");
-        jButtonEnviar.addActionListener(new java.awt.event.ActionListener() {
+        jButtonEnviarC.setText("Enviar");
+        jButtonEnviarC.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonEnviarActionPerformed(evt);
+                jButtonEnviarCActionPerformed(evt);
             }
         });
 
@@ -124,7 +114,7 @@ public class JDialogAltaCliente extends javax.swing.JDialog {
                 .addGap(0, 17, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButtonEnviar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButtonEnviarC, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(35, 35, 35))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
@@ -139,41 +129,42 @@ public class JDialogAltaCliente extends javax.swing.JDialog {
                 .addGap(18, 18, 18)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 358, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButtonEnviar)
+                .addComponent(jButtonEnviarC)
                 .addContainerGap(13, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextFieldMarcaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldMarcaActionPerformed
+    private void jTextFieldApellidoClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldApellidoClienteActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldMarcaActionPerformed
+    }//GEN-LAST:event_jTextFieldApellidoClienteActionPerformed
 
-    private void jButtonEnviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEnviarActionPerformed
-        Producto nuevo = new Producto ();
-                nuevo.setNombre(jTextFieldNombre.getText());
-                nuevo.setMarca(jTextFieldMarca.getText());
-                nuevo.setPrecio((Double) jSpinnerPrecio.getValue());
-                nuevo.setStock((int) jSpinnerStock.getValue());
-                nuevo.setTipo_producto(jComboBoxTipoProd.getSelectedItem().toString());
-                nuevo.setDescripcion(jTextFieldDescripción.getText());
-                nuevo.setImagen_url(jTextFieldImagenURL.getText());
+    private void jButtonEnviarCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEnviarCActionPerformed
+        Cliente nuevo = new Cliente ();
+                nuevo.setNombre(jTextFieldNombreCliente.getText());
+                nuevo.setApellidos(jTextFieldApellidoCliente.getText());
+                nuevo.setDni(jTextFieldDNICliente.getText());
+                nuevo.setTelefono(jTextFieldTelefonoCliente.getText());
+                nuevo.setEmail(jTextFieldEmailCliente.getText());
+                nuevo.setDireccion(jTextFieldDireccionCliente.getText());
                 //nuevo.setFecha_alta(NOW());
-                ProductoDAO pdao = new ProductoDAO();
+                ClienteDAO cdao = new ClienteDAO();
                 
-                 if (pdao.crear(nuevo)) {
+                 if (cdao.insertar(nuevo)) {
                     dispose();
-                    jframepadre.cargarProductosPorTipo();
-                    JOptionPane.showMessageDialog(this, "Producto creado correctamente");
+                    JOptionPane.showMessageDialog(this, "Cliente creado correctamente");
+                    java.awt.EventQueue.invokeLater(() -> {
+                        jframepadre.cargarClientes();
+                    });
                 } else {
                     JOptionPane.showMessageDialog(this,
-                            "Error al crear el producto.",
+                            "Error al crear el cliente.",
                             "Error",
                             JOptionPane.ERROR_MESSAGE);
                 }
         
-    }//GEN-LAST:event_jButtonEnviarActionPerformed
+    }//GEN-LAST:event_jButtonEnviarCActionPerformed
 
     /**
      * @param args the command line arguments
@@ -200,7 +191,7 @@ public class JDialogAltaCliente extends javax.swing.JDialog {
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                JDialogAltaProducto dialog = new JDialogAltaProducto(new javax.swing.JFrame(), true);
+                JDialogAltaCliente dialog = new JDialogAltaCliente(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -213,24 +204,22 @@ public class JDialogAltaCliente extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButtonEnviar;
-    private javax.swing.JComboBox<String> jComboBoxTipoProd;
+    private javax.swing.JButton jButtonEnviarC;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabelNombre;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JSpinner jSpinnerPrecio;
-    private javax.swing.JSpinner jSpinnerStock;
     private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextFieldDescripción;
-    private javax.swing.JTextField jTextFieldImagenURL;
-    private javax.swing.JTextField jTextFieldMarca;
-    private javax.swing.JTextField jTextFieldNombre;
+    private javax.swing.JTextField jTextFieldApellidoCliente;
+    private javax.swing.JTextField jTextFieldDNICliente;
+    private javax.swing.JTextField jTextFieldDireccionCliente;
+    private javax.swing.JTextField jTextFieldEmailCliente;
+    private javax.swing.JTextField jTextFieldNombreCliente;
+    private javax.swing.JTextField jTextFieldTelefonoCliente;
     // End of variables declaration//GEN-END:variables
 }

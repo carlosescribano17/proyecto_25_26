@@ -188,6 +188,9 @@ public class MenuPrincipal extends javax.swing.JFrame {
     // Si estás usando control de filas modificadas
     filasModificadasCliente.clear();
     jButtonModificarClient.setEnabled(false);
+    
+    jTableClientes.revalidate();
+    jTableClientes.repaint();
 }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -805,7 +808,8 @@ public class MenuPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonModificarClientActionPerformed
 
     private void jButtonNuevoClientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNuevoClientActionPerformed
-        // TODO add your handling code here:
+        JDialogAltaCliente jdc = new JDialogAltaCliente(this, true);
+        jdc.setVisible(true);
     }//GEN-LAST:event_jButtonNuevoClientActionPerformed
 
     private void jButtonBorrarClientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBorrarClientActionPerformed

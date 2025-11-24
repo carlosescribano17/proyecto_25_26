@@ -45,8 +45,8 @@ public class ClienteDAO {
 
     // Crear cliente
     public boolean insertar(Cliente cliente) {
-        String sql = "INSERT INTO clientes (dni, nombre, apellidos, telefono, email, direccion) "
-                + "VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO clientes (dni, nombre, apellidos, telefono, email, direccion, fecha_registro) "
+                + "VALUES (?, ?, ?, ?, ?, ?, NOW())";
 
         try (Connection conexion = ConexionBD.getConexion();
             PreparedStatement ps = conexion.prepareStatement(sql)) {
