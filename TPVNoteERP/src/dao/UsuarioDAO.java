@@ -69,6 +69,29 @@ public class UsuarioDAO {
         return false;
     }
     
+    public boolean insertar(Usuario usuario) {
+        String sql = "INSERT INTO empleados (usuario, contrasena, nombre, apellidos, rol, activo, fecha_alta) "
+                + "VALUES (?, ?, ?, ?, ?, 1, NOW())";
+
+        try (Connection conexion = ConexionBD.getConexion();
+            PreparedStatement ps = conexion.prepareStatement(sql)) {
+            
+            String hashedPassword = BCrypt.hashpw(usuario.getContrasena(), BCrypt.gensalt(12));
+            
+            ps.setString(1, usuario.getUsuario());
+            ps.setString(2, hashedPassword);
+            ps.setString(3, usuario.getNombre());
+            ps.setString(4, usuario.getApellidos());
+            ps.setString(5, usuario.getRol());
+
+            return ps.executeUpdate() > 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+    
     public String[] obtenerNombresColumnas() {
         String sql = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS "
                    + "WHERE TABLE_SCHEMA = 'tpv_guitarras' "

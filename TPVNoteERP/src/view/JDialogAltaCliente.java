@@ -71,12 +71,6 @@ public class JDialogAltaCliente extends javax.swing.JDialog {
 
         jLabel3.setText("Apellidos");
         jPanel2.add(jLabel3);
-
-        jTextFieldApellidoCliente.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldApellidoClienteActionPerformed(evt);
-            }
-        });
         jPanel2.add(jTextFieldApellidoCliente);
 
         jLabel4.setText("DNI");
@@ -132,10 +126,6 @@ public class JDialogAltaCliente extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jTextFieldApellidoClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldApellidoClienteActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldApellidoClienteActionPerformed
 
     private void jButtonEnviarCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEnviarCActionPerformed
         Cliente nuevo = new Cliente ();
