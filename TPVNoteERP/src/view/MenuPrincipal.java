@@ -7,6 +7,7 @@ package view;
 import com.formdev.flatlaf.themes.FlatMacDarkLaf;
 import dao.ClienteDAO;
 import dao.ProductoDAO;
+import dao.UsuarioDAO;
 import java.awt.CardLayout;
 import javax.swing.JFrame;
 import javax.swing.UIManager;
@@ -31,11 +32,14 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private Usuario userActual;
     DefaultTableModel dtm;
     DefaultTableModel dtmc;
+    DefaultTableModel dtmu;
     ProductoDAO pdao = new ProductoDAO();
     ClienteDAO cdao = new ClienteDAO();
+    UsuarioDAO udao = new UsuarioDAO();
     private boolean comboListo = false;
     private java.util.Set<Integer> filasModificadas = new java.util.HashSet<>();
     private java.util.Set<Integer> filasModificadasCliente = new java.util.HashSet<>();
+    private java.util.Set<Integer> filasModificadasUsuario = new java.util.HashSet<>();
     private boolean cargandoTablas = false;
 
     /**
@@ -72,6 +76,13 @@ public class MenuPrincipal extends javax.swing.JFrame {
             }
         };
         
+        dtmu = new DefaultTableModel(udao.obtenerNombresColumnas(), 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return true;
+            }
+        };
+        jTableUsuarios.setModel(dtmu);
         jTableClientes.setModel(dtmc);
         jTableProductos.setModel(dtm);
         dtm.addTableModelListener(e -> { //habilita el botón en cuanto haya un cambio en la tabla
@@ -114,8 +125,10 @@ public class MenuPrincipal extends javax.swing.JFrame {
         });
         jTableProductos.setAutoCreateRowSorter(false);
         jTableClientes.setAutoCreateRowSorter(false);
+        jTableUsuarios.setAutoCreateRowSorter(false);
         dtm.setColumnIdentifiers(pdao.obtenerNombresColumnas());
         dtmc.setColumnIdentifiers(cdao.obtenerNombresColumnas());
+        dtmu.setColumnIdentifiers(udao.obtenerNombresColumnas());
         jButtonModificar.setEnabled(false);
         jButtonModificarClient.setEnabled(false);
         comboListo = true;
@@ -168,34 +181,53 @@ public class MenuPrincipal extends javax.swing.JFrame {
         cargandoTablas = false;
     }
     
+    public void cargarUsuarios(){
+        dtmu.setRowCount(0);
+        
+        List<Usuario> usuarios = udao.obtenerTodos();
+        
+        for(Usuario u : usuarios){
+            Object[] fila = new Object[] {
+              u.getId(),
+                u.getUsuario(),
+                u.getNombre(),
+                u.getApellidos(),
+                u.getRol(),
+                u.getFecha_alta()
+            };
+            
+            dtmu.addRow(fila);
+        }
+    }
+    
     public void cargarClientes() {
         cargandoTablas = true;
-    // Limpiar la tabla
-    dtmc.setRowCount(0);
+        // Limpiar la tabla
+        dtmc.setRowCount(0);
 
-    List<Cliente> clientes = cdao.obtenerTodos();
+        List<Cliente> clientes = cdao.obtenerTodos();
 
-    // Agregar clientes a la tabla
-    for (Cliente c : clientes) {
-        Object[] fila = new Object[]{
-            c.getIdCliente(),
-            c.getDni(),
-            c.getNombre(),
-            c.getApellidos(),
-            c.getTelefono(),
-            c.getEmail(),
-            c.getDireccion(),
-            c.getFecha_alta()
-        };
-        dtmc.addRow(fila);
-    }
-    cargandoTablas = false;
-    // Si estás usando control de filas modificadas
-    filasModificadasCliente.clear();
-    jButtonModificarClient.setEnabled(false);
-    
-    jTableClientes.revalidate();
-    jTableClientes.repaint();
+        // Agregar clientes a la tabla
+        for (Cliente c : clientes) {
+            Object[] fila = new Object[]{
+                c.getIdCliente(),
+                c.getDni(),
+                c.getNombre(),
+                c.getApellidos(),
+                c.getTelefono(),
+                c.getEmail(),
+                c.getDireccion(),
+                c.getFecha_alta()
+            };
+            dtmc.addRow(fila);
+        }
+        cargandoTablas = false;
+
+        filasModificadasCliente.clear();
+        jButtonModificarClient.setEnabled(false);
+
+        jTableClientes.revalidate();
+        jTableClientes.repaint();
 }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -243,6 +275,10 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jPanelUsuarios = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         btnVolverUsuarios = new javax.swing.JButton();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jTableUsuarios = new javax.swing.JTable();
+        jButtonBorrarUsuario = new javax.swing.JButton();
+        jButtonNuevoUsuario = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("TPV NoteERP");
@@ -602,26 +638,59 @@ public class MenuPrincipal extends javax.swing.JFrame {
             }
         });
 
+        jTableUsuarios.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane3.setViewportView(jTableUsuarios);
+
+        jButtonBorrarUsuario.setText("Borrar");
+        jButtonBorrarUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonBorrarUsuarioActionPerformed(evt);
+            }
+        });
+
+        jButtonNuevoUsuario.setText("Nuevo");
+
         javax.swing.GroupLayout jPanelUsuariosLayout = new javax.swing.GroupLayout(jPanelUsuarios);
         jPanelUsuarios.setLayout(jPanelUsuariosLayout);
         jPanelUsuariosLayout.setHorizontalGroup(
             jPanelUsuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelUsuariosLayout.createSequentialGroup()
-                .addGap(268, 268, 268)
-                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(1468, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelUsuariosLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButtonNuevoUsuario)
+                .addGap(54, 54, 54)
+                .addComponent(jButtonBorrarUsuario)
+                .addGap(57, 57, 57)
                 .addComponent(btnVolverUsuarios)
                 .addGap(68, 68, 68))
+            .addGroup(jPanelUsuariosLayout.createSequentialGroup()
+                .addGap(268, 268, 268)
+                .addGroup(jPanelUsuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 1536, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(165, Short.MAX_VALUE))
         );
         jPanelUsuariosLayout.setVerticalGroup(
             jPanelUsuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelUsuariosLayout.createSequentialGroup()
                 .addGap(105, 105, 105)
                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 741, Short.MAX_VALUE)
-                .addComponent(btnVolverUsuarios)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 536, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 187, Short.MAX_VALUE)
+                .addGroup(jPanelUsuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnVolverUsuarios)
+                    .addComponent(jButtonBorrarUsuario)
+                    .addComponent(jButtonNuevoUsuario))
                 .addGap(47, 47, 47))
         );
 
@@ -696,6 +765,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private void btnUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUsuariosActionPerformed
         // TODO add your handling code here:
         cardLayout.show(jPanelVentanaUnica,"usuarios");
+        cargarUsuarios();
     }//GEN-LAST:event_btnUsuariosActionPerformed
 
     private void jButtonBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBorrarActionPerformed
@@ -852,6 +922,42 @@ public class MenuPrincipal extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(this, "Clientes borrados correctamente");
     }//GEN-LAST:event_jButtonBorrarClientActionPerformed
 
+    private void jButtonBorrarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBorrarUsuarioActionPerformed
+        // TODO add your handling code here:
+        int[] filas = jTableUsuarios.getSelectedRows();
+
+        if (filas.length == 0) {
+            JOptionPane.showMessageDialog(this, "Selecciona al menos un usuario.", "Aviso", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        int confirm = JOptionPane.showConfirmDialog(
+                this,
+                "¿Seguro que deseas borrar los usuarios seleccionados?",
+                "Confirmar borrado",
+                JOptionPane.YES_NO_OPTION
+        );
+
+        if (confirm != JOptionPane.YES_OPTION) return;
+
+        for (int i = filas.length - 1; i >= 0; i--) {
+
+            int fila = filas[i];
+            int idUsuario = (int) jTableUsuarios.getValueAt(fila, 0);
+
+            if (udao.eliminar(idUsuario)) {
+                dtmu.removeRow(fila);
+            } else {
+                JOptionPane.showMessageDialog(this,
+                        "Error al borrar el usuario con ID: " + idUsuario,
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE);
+            }
+        }
+
+        JOptionPane.showMessageDialog(this, "Usuarios borrados correctamente");
+    }//GEN-LAST:event_jButtonBorrarUsuarioActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -895,10 +1001,12 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton btnVolverVentas;
     private javax.swing.JButton jButtonBorrar;
     private javax.swing.JButton jButtonBorrarClient;
+    private javax.swing.JButton jButtonBorrarUsuario;
     private javax.swing.JButton jButtonModificar;
     private javax.swing.JButton jButtonModificarClient;
     private javax.swing.JButton jButtonNuevo;
     private javax.swing.JButton jButtonNuevoClient;
+    private javax.swing.JButton jButtonNuevoUsuario;
     private javax.swing.JComboBox<String> jComboBoxTipoProducto;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -917,7 +1025,9 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JPanel jPanelVentas;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTable jTableClientes;
     private javax.swing.JTable jTableProductos;
+    private javax.swing.JTable jTableUsuarios;
     // End of variables declaration//GEN-END:variables
 }
