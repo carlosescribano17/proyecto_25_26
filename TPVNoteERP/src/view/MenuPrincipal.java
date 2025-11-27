@@ -47,6 +47,11 @@ public class MenuPrincipal extends javax.swing.JFrame {
         
         this.userActual = user;
         
+        if(!userActual.getRol().equalsIgnoreCase("ADMINISTRADOR")){
+            btnArticulos.setEnabled(false);
+            btnInformes.setEnabled(false);
+            btnUsuarios.setEnabled(false);
+        }
         
         cardLayout = (CardLayout) jPanelVentanaUnica.getLayout();
         cardLayout.show(jPanelVentanaUnica, "card2");
@@ -208,7 +213,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         btnArticulos = new javax.swing.JButton();
         btnClientes = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
-        btnStock = new javax.swing.JButton();
+        btnInformes = new javax.swing.JButton();
         btnUsuarios = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
         jLabelUsuario = new javax.swing.JLabel();
@@ -232,7 +237,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jComboBoxTipoProducto = new javax.swing.JComboBox<>();
         jButtonModificar = new javax.swing.JButton();
         jButtonNuevo = new javax.swing.JButton();
-        jPanelStock = new javax.swing.JPanel();
+        jPanelInformes = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         btnVolverStock = new javax.swing.JButton();
         jPanelUsuarios = new javax.swing.JPanel();
@@ -272,13 +277,13 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
         jPanel2.setLayout(new java.awt.GridLayout(3, 2, 0, 70));
 
-        btnStock.setText("STOCK");
-        btnStock.addActionListener(new java.awt.event.ActionListener() {
+        btnInformes.setText("INFORMES");
+        btnInformes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnStockActionPerformed(evt);
+                btnInformesActionPerformed(evt);
             }
         });
-        jPanel2.add(btnStock);
+        jPanel2.add(btnInformes);
 
         btnUsuarios.setText("USUARIOS");
         btnUsuarios.addActionListener(new java.awt.event.ActionListener() {
@@ -443,11 +448,11 @@ public class MenuPrincipal extends javax.swing.JFrame {
                 .addGap(43, 43, 43)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 716, Short.MAX_VALUE)
-                .addGroup(jPanelClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButtonBorrarClient)
+                .addGroup(jPanelClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanelClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jButtonModificarClient)
-                        .addComponent(jButtonNuevoClient)))
+                        .addComponent(jButtonNuevoClient))
+                    .addComponent(jButtonBorrarClient))
                 .addGap(64, 64, 64)
                 .addComponent(btnVolverClientes)
                 .addGap(47, 47, 47))
@@ -563,22 +568,22 @@ public class MenuPrincipal extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout jPanelStockLayout = new javax.swing.GroupLayout(jPanelStock);
-        jPanelStock.setLayout(jPanelStockLayout);
-        jPanelStockLayout.setHorizontalGroup(
-            jPanelStockLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelStockLayout.createSequentialGroup()
+        javax.swing.GroupLayout jPanelInformesLayout = new javax.swing.GroupLayout(jPanelInformes);
+        jPanelInformes.setLayout(jPanelInformesLayout);
+        jPanelInformesLayout.setHorizontalGroup(
+            jPanelInformesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelInformesLayout.createSequentialGroup()
                 .addGap(268, 268, 268)
                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(1468, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelStockLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelInformesLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnVolverStock)
                 .addGap(68, 68, 68))
         );
-        jPanelStockLayout.setVerticalGroup(
-            jPanelStockLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelStockLayout.createSequentialGroup()
+        jPanelInformesLayout.setVerticalGroup(
+            jPanelInformesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelInformesLayout.createSequentialGroup()
                 .addGap(105, 105, 105)
                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 741, Short.MAX_VALUE)
@@ -586,7 +591,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
                 .addGap(47, 47, 47))
         );
 
-        jPanelVentanaUnica.add(jPanelStock, "stock");
+        jPanelVentanaUnica.add(jPanelInformes, "stock");
 
         jLabel5.setText("Usuarios");
 
@@ -678,10 +683,10 @@ public class MenuPrincipal extends javax.swing.JFrame {
         cardLayout.show(jPanelVentanaUnica,"principal");
     }//GEN-LAST:event_btnVolverStockActionPerformed
 
-    private void btnStockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStockActionPerformed
+    private void btnInformesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInformesActionPerformed
         // TODO add your handling code here:
         cardLayout.show(jPanelVentanaUnica,"stock");
-    }//GEN-LAST:event_btnStockActionPerformed
+    }//GEN-LAST:event_btnInformesActionPerformed
 
     private void btnVolverUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverUsuariosActionPerformed
         // TODO add your handling code here:
@@ -879,8 +884,8 @@ public class MenuPrincipal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnArticulos;
     private javax.swing.JButton btnClientes;
+    private javax.swing.JButton btnInformes;
     private javax.swing.JButton btnSalir;
-    private javax.swing.JButton btnStock;
     private javax.swing.JButton btnUsuarios;
     private javax.swing.JButton btnVentas;
     private javax.swing.JButton btnVolverArticulos;
@@ -905,8 +910,8 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanelArticulos;
     private javax.swing.JPanel jPanelClientes;
+    private javax.swing.JPanel jPanelInformes;
     private javax.swing.JPanel jPanelPrincipal;
-    private javax.swing.JPanel jPanelStock;
     private javax.swing.JPanel jPanelUsuarios;
     private javax.swing.JPanel jPanelVentanaUnica;
     private javax.swing.JPanel jPanelVentas;

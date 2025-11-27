@@ -123,12 +123,12 @@
                 <Property name="verticalGap" type="int" value="70"/>
               </Layout>
               <SubComponents>
-                <Component class="javax.swing.JButton" name="btnStock">
+                <Component class="javax.swing.JButton" name="btnInformes">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="STOCK"/>
+                    <Property name="text" type="java.lang.String" value="INFORMES"/>
                   </Properties>
                   <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnStockActionPerformed"/>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnInformesActionPerformed"/>
                   </Events>
                 </Component>
                 <Component class="javax.swing.JButton" name="btnUsuarios">
@@ -260,12 +260,12 @@
                       <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
                       <Component id="jLabel2" min="-2" pref="66" max="-2" attributes="0"/>
                       <EmptySpace pref="716" max="32767" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jButtonBorrarClient" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Group type="103" alignment="3" groupAlignment="3" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="103" alignment="0" groupAlignment="3" attributes="0">
                               <Component id="jButtonModificarClient" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="jButtonNuevoClient" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
+                          <Component id="jButtonBorrarClient" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="64" max="-2" attributes="0"/>
                       <Component id="btnVolverClientes" min="-2" max="-2" attributes="0"/>
@@ -482,7 +482,7 @@
             </Component>
           </SubComponents>
         </Container>
-        <Container class="javax.swing.JPanel" name="jPanelStock">
+        <Container class="javax.swing.JPanel" name="jPanelInformes">
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignCardLayout" value="org.netbeans.modules.form.compat2.layouts.DesignCardLayout$CardConstraintsDescription">
               <CardConstraints cardName="stock"/>
