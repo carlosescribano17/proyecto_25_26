@@ -119,27 +119,27 @@ public class JDialogAltaUsuario extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonEnviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEnviarActionPerformed
-         Usuario nuevo = new Usuario ();
-                nuevo.setUsuario(jTextFieldUsuario.getText());
-                nuevo.setContrasena(jTextFieldContrasena.getText());
-                nuevo.setNombre(jTextFieldNombre.getText());
-                nuevo.setApellidos(jTextFieldApellidos.getText());
-                nuevo.setRol(jComboBoxRol.getSelectedItem().toString());
-                
-                UsuarioDAO udao = new UsuarioDAO();
-                
-                 if (udao.insertar(nuevo)) {
-                    dispose();
-                    JOptionPane.showMessageDialog(this, "Usuario creado correctamente");
-                    java.awt.EventQueue.invokeLater(() -> {
-                        jframepadre.cargarUsuarios();
-                    });
-                } else {
-                    JOptionPane.showMessageDialog(this,
-                            "Error al crear el cliente.",
-                            "Error",
-                            JOptionPane.ERROR_MESSAGE);
-                }
+        Usuario nuevo = new Usuario ();
+        nuevo.setUsuario(jTextFieldUsuario.getText());
+        nuevo.setContrasena(jTextFieldContrasena.getText());
+        nuevo.setNombre(jTextFieldNombre.getText());
+        nuevo.setApellidos(jTextFieldApellidos.getText());
+        nuevo.setRol(jComboBoxRol.getSelectedItem().toString());
+
+        UsuarioDAO udao = new UsuarioDAO();
+
+         if (udao.insertar(nuevo)) {
+            dispose();
+            JOptionPane.showMessageDialog(this, "Usuario creado correctamente");
+            java.awt.EventQueue.invokeLater(() -> {
+                jframepadre.cargarUsuarios();
+            });
+        } else {
+            JOptionPane.showMessageDialog(this,
+                    "Error al crear el usuario.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_jButtonEnviarActionPerformed
 
     /**

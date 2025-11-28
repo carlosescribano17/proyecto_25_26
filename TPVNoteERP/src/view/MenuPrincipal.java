@@ -659,6 +659,11 @@ public class MenuPrincipal extends javax.swing.JFrame {
         });
 
         jButtonNuevoUsuario.setText("Nuevo");
+        jButtonNuevoUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonNuevoUsuarioActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanelUsuariosLayout = new javax.swing.GroupLayout(jPanelUsuarios);
         jPanelUsuarios.setLayout(jPanelUsuariosLayout);
@@ -957,6 +962,12 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
         JOptionPane.showMessageDialog(this, "Usuarios borrados correctamente");
     }//GEN-LAST:event_jButtonBorrarUsuarioActionPerformed
+
+    private void jButtonNuevoUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNuevoUsuarioActionPerformed
+        // TODO add your handling code here:
+        JDialogAltaUsuario jdu = new JDialogAltaUsuario(this, true);
+        jdu.setVisible(true);
+    }//GEN-LAST:event_jButtonNuevoUsuarioActionPerformed
 
     /**
      * @param args the command line arguments
