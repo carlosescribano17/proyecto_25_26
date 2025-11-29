@@ -64,7 +64,7 @@ public class jPanelVentas2 extends javax.swing.JPanel {
         jLabelTotal = new javax.swing.JLabel();
 
         setMaximumSize(new java.awt.Dimension(2147483647, 2147483647));
-        setPreferredSize(new java.awt.Dimension(2755, 982));
+        setPreferredSize(null);
 
         jPanelProductos2.setBackground(new java.awt.Color(102, 102, 102));
         jPanelProductos2.setLayout(new java.awt.BorderLayout());

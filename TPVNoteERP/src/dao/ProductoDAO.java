@@ -88,7 +88,6 @@ public class ProductoDAO {
             p.setActivo(rs.getInt("activo"));
             p.setFecha_alta(rs.getTimestamp("fecha_alta"));
             
-            System.out.println(p.toString());
             productos.add(p);
         }
         
