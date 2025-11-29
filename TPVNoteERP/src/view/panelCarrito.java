@@ -144,6 +144,15 @@ public class panelCarrito extends javax.swing.JPanel {
         return total;
     }
     
+    public void vaciarCarrito() {
+        modeloCarrito.setRowCount(0);
+        carrito.clear();
+        parent.cambiarTotal(String.valueOf(calcularTotalPedido()));
+    }
+    
+    public DefaultTableModel getModelo() {
+        return modeloCarrito;
+    }
     
     /**
      * This method is called from within the constructor to initialize the form.

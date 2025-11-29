@@ -4,9 +4,15 @@
  */
 package view;
 
+import dao.ClienteDAO;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
+import java.awt.Frame;
+import java.util.*;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
+import javax.swing.table.DefaultTableModel;
+import model.Cliente;
 import model.Usuario;
 
 /**
@@ -22,10 +28,13 @@ public class jPanelVentas2 extends javax.swing.JPanel {
     private JPanel panelVentana;
     private panelProductos pProductos;
     private panelCarrito pCarrito;
+    private ClienteDAO cdao;
+    private Usuario user;
     
     public jPanelVentas2(Usuario user, CardLayout cardLayout,JPanel panelVentana) {
         initComponents();
         
+        this.user = user;
         this.cardLayout = cardLayout;
         this.panelVentana = panelVentana;
         
@@ -35,6 +44,14 @@ public class jPanelVentas2 extends javax.swing.JPanel {
         pCarrito = new panelCarrito(this);
         jPanelCarrito2.add(pCarrito, BorderLayout.CENTER);
         
+        cdao = new ClienteDAO();
+        
+        List<Cliente> listaC = new ArrayList<>();
+        listaC = cdao.obtenerTodos();
+        
+        for(Cliente c : listaC){
+            jComboBoxClientes.addItem(c.getIdCliente() + "-" + c.getNombre() + " " +  c.getApellidos());
+        }
         revalidate();
         repaint();
     }
@@ -46,6 +63,15 @@ public class jPanelVentas2 extends javax.swing.JPanel {
     public void cambiarTotal(String total){
         jLabelTotal.setText(total);
     }
+    
+    public String getClienteSeleccionado() {
+        return jComboBoxClientes.getSelectedItem().toString();
+    }
+    
+    public Usuario getUser(){
+        return user;
+    }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -62,9 +88,10 @@ public class jPanelVentas2 extends javax.swing.JPanel {
         btnAnterior = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
         jLabelTotal = new javax.swing.JLabel();
+        jComboBoxClientes = new javax.swing.JComboBox<>();
+        jButtonPagar = new javax.swing.JButton();
 
         setMaximumSize(new java.awt.Dimension(2147483647, 2147483647));
-        setPreferredSize(null);
 
         jPanelProductos2.setBackground(new java.awt.Color(102, 102, 102));
         jPanelProductos2.setLayout(new java.awt.BorderLayout());
@@ -80,6 +107,14 @@ public class jPanelVentas2 extends javax.swing.JPanel {
         btnEliminar.setText("Eliminar");
         btnEliminar.addActionListener(this::btnEliminarActionPerformed);
 
+        jLabelTotal.setText("0,00");
+
+        jComboBoxClientes.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "INVITADO" }));
+
+        jButtonPagar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jButtonPagar.setText("PAGAR");
+        jButtonPagar.addActionListener(this::jButtonPagarActionPerformed);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -87,6 +122,10 @@ public class jPanelVentas2 extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnVolver)
+                        .addGap(31, 31, 31))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanelProductos2, javax.swing.GroupLayout.PREFERRED_SIZE, 856, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(45, 45, 45)
@@ -96,10 +135,12 @@ public class jPanelVentas2 extends javax.swing.JPanel {
                         .addGap(273, 273, 273)
                         .addComponent(jPanelCarrito2, javax.swing.GroupLayout.PREFERRED_SIZE, 1042, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(440, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnVolver)
-                        .addGap(31, 31, 31))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(37, 37, 37)
+                        .addComponent(jComboBoxClientes, javax.swing.GroupLayout.PREFERRED_SIZE, 639, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButtonPagar, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(410, 410, 410))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabelTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -107,7 +148,7 @@ public class jPanelVentas2 extends javax.swing.JPanel {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(15, 15, 15)
@@ -117,15 +158,19 @@ public class jPanelVentas2 extends javax.swing.JPanel {
                         .addComponent(btnAnterior, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(49, 49, 49)
                         .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 295, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 84, Short.MAX_VALUE)
+                .addComponent(jComboBoxClientes, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(154, 154, 154)
                 .addComponent(btnVolver)
                 .addGap(29, 29, 29))
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(32, 32, 32)
                 .addComponent(jPanelCarrito2, javax.swing.GroupLayout.PREFERRED_SIZE, 620, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(29, 29, 29)
                 .addComponent(jLabelTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(32, 32, 32)
+                .addComponent(jButtonPagar, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -144,11 +189,19 @@ public class jPanelVentas2 extends javax.swing.JPanel {
         pCarrito.eliminarProducto();
     }//GEN-LAST:event_btnEliminarActionPerformed
 
+    private void jButtonPagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPagarActionPerformed
+        
+        JDialogPago jdp = new JDialogPago((Frame) SwingUtilities.getWindowAncestor(this), true, pCarrito , this);
+        jdp.setVisible(true);
+    }//GEN-LAST:event_jButtonPagarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAnterior;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnVolver;
+    private javax.swing.JButton jButtonPagar;
+    private javax.swing.JComboBox<String> jComboBoxClientes;
     private javax.swing.JLabel jLabelTotal;
     private javax.swing.JPanel jPanelCarrito2;
     private javax.swing.JPanel jPanelProductos2;
