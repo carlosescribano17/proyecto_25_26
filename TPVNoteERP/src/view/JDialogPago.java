@@ -58,6 +58,11 @@ public class JDialogPago extends javax.swing.JDialog {
 
         jButtonEfectivo.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jButtonEfectivo.setText("EFECTIVO");
+        jButtonEfectivo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonEfectivoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -144,6 +149,29 @@ public class JDialogPago extends javax.swing.JDialog {
         // Cerrar ventana
         dispose();
     }//GEN-LAST:event_jButtonTarjetaActionPerformed
+
+    private void jButtonEfectivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEfectivoActionPerformed
+        JDialogEfectivo jde = new JDialogEfectivo(
+            (Frame) this.getParent(),
+            true,
+            carrito,
+            panelVentas
+        );
+        jde.setLocationRelativeTo(this);
+        jde.setVisible(true);
+    }//GEN-LAST:event_jButtonEfectivoActionPerformed
+
+    private void abrirPagoEfectivo() {
+        JDialogEfectivo jde = new JDialogEfectivo(
+                (Frame) this.getParent(),
+                true,
+                carrito,
+                panelVentas
+        );
+        jde.setLocationRelativeTo(this);
+        jde.setVisible(true);
+    }
+
 
     /**
      * @param args the command line arguments
