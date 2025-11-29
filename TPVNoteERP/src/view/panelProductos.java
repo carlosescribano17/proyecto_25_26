@@ -26,8 +26,10 @@ public class panelProductos extends javax.swing.JPanel {
     private JTable tablaListado;
     private DefaultTableModel modeloListado;
     private JScrollPane scrollListado;
+    private jPanelVentas2 parent;
     
-    public panelProductos() {
+    public panelProductos(jPanelVentas2 parent) {
+        this.parent = parent;
         initComponents();
         
         
@@ -57,6 +59,16 @@ public class panelProductos extends javax.swing.JPanel {
         this.add(panelTipos, "Tipos");
         
         mostrarTipos();
+        
+        tablaListado.addMouseListener(new java.awt.event.MouseAdapter() {
+        @Override
+        public void mouseClicked(java.awt.event.MouseEvent evt) {
+            if (evt.getClickCount() == 2) { // doble clic
+                pasarProductoAlCarrito();
+            }
+        }
+    });
+
     }
 
     /**
@@ -99,6 +111,25 @@ public class panelProductos extends javax.swing.JPanel {
     public void mostrarListado() {
         CardLayout cl = (CardLayout)(this.getLayout());
         cl.show(this, "Listado");
+    }
+    
+    private void pasarProductoAlCarrito() {
+        int fila = tablaListado.getSelectedRow();
+        if (fila == -1) return;
+
+        Producto p = new Producto();
+        p.setId_producto((int) modeloListado.getValueAt(fila, 0));
+        p.setNombre((String) modeloListado.getValueAt(fila, 1));
+        p.setMarca((String) modeloListado.getValueAt(fila, 2));
+        p.setPrecio((double) modeloListado.getValueAt(fila, 3));
+        p.setStock((int) modeloListado.getValueAt(fila, 4));
+        p.setTipo_producto((String) modeloListado.getValueAt(fila, 5));
+        p.setDescripcion((String) modeloListado.getValueAt(fila, 6));
+        p.setImagen_url((String) modeloListado.getValueAt(fila, 7));
+        p.setActivo((int) modeloListado.getValueAt(fila, 8));
+        p.setFecha_alta((java.sql.Timestamp) modeloListado.getValueAt(fila, 9));
+
+        parent.getCarritoPanel().agregarProducto(p);
     }
     
     /**
