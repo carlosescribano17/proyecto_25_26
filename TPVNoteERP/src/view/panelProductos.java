@@ -4,7 +4,14 @@
  */
 package view;
 
+import dao.ProductoDAO;
+import java.awt.BorderLayout;
 import java.awt.CardLayout;
+import java.util.List;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+import model.Producto;
 
 /**
  *
@@ -15,8 +22,36 @@ public class panelProductos extends javax.swing.JPanel {
     /**
      * Creates new form panelProductos
      */
+    private ProductoDAO pdao;
+    private JTable tablaListado;
+    private DefaultTableModel modeloListado;
+    private JScrollPane scrollListado;
+    
     public panelProductos() {
         initComponents();
+        
+        
+        // DAO
+        pdao = new ProductoDAO();
+
+        // Preparar tabla (no la añadimos aún al initComponents para no tocar código generado)
+        tablaListado = new JTable();
+        modeloListado = new DefaultTableModel(new String[]{
+            "id_producto", "nombre", "marca", "precio", "stock", "tipo_producto",
+            "descripcion", "imagen_url", "activo", "fecha_alta"
+        }, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; // listado solo lectura
+            }
+        };
+        tablaListado.setModel(modeloListado);
+        scrollListado = new JScrollPane(tablaListado);
+
+        // Reemplazamos el contenido visual del panelListado por el scroll (limpiamos y usamos BorderLayout)
+        panelListado.removeAll();
+        panelListado.setLayout(new BorderLayout());
+        panelListado.add(scrollListado, BorderLayout.CENTER);
         
         this.add(panelListado, "Listado");
         this.add(panelTipos, "Tipos");
@@ -24,6 +59,38 @@ public class panelProductos extends javax.swing.JPanel {
         mostrarTipos();
     }
 
+    /**
+     * Carga productos por tipo usando ProductoDAO y actualiza la tabla.
+     * tipo debe coincidir con los valores que haya en la BD (p.e. "ACCESORIO", "GUITARRA", "AMPLIFICADOR")
+     */
+    public void cargarListadoPorTipo(String tipo) {
+        // Vaciar modelo
+        modeloListado.setRowCount(0);
+
+        // Obtener lista desde DAO
+        List<Producto> productos = pdao.listarPorTipo(tipo);
+
+        // Rellenar filas (asegúrate que getters coinciden con tu modelo)
+        for (Producto p : productos) {
+            Object[] fila = new Object[]{
+                p.getId_producto(),
+                p.getNombre(),
+                p.getMarca(),
+                p.getPrecio(),
+                p.getStock(),
+                p.getTipo_producto(),
+                p.getDescripcion(),
+                p.getImagen_url(),
+                p.getActivo(),
+                p.getFecha_alta()
+            };
+            modeloListado.addRow(fila);
+        }
+
+        // Mostrar listado
+        mostrarListado();
+    }
+    
     public void mostrarTipos() {
         CardLayout cl = (CardLayout)(this.getLayout());
         cl.show(this, "Tipos");
@@ -81,8 +148,10 @@ public class panelProductos extends javax.swing.JPanel {
         btnAccesorios.addActionListener(this::btnAccesoriosActionPerformed);
 
         btnAmplificadores.setText("amplificadores");
+        btnAmplificadores.addActionListener(this::btnAmplificadoresActionPerformed);
 
         btnGuitarras.setText("guitarras");
+        btnGuitarras.addActionListener(this::btnGuitarrasActionPerformed);
 
         javax.swing.GroupLayout panelTiposLayout = new javax.swing.GroupLayout(panelTipos);
         panelTipos.setLayout(panelTiposLayout);
@@ -114,9 +183,18 @@ public class panelProductos extends javax.swing.JPanel {
     private void btnAccesoriosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAccesoriosActionPerformed
         // TODO add your handling code here:
         pruebaListado.setText("accesorios");
-        mostrarListado();
-        
+        cargarListadoPorTipo("ACCESORIO");
     }//GEN-LAST:event_btnAccesoriosActionPerformed
+
+    private void btnAmplificadoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAmplificadoresActionPerformed
+        pruebaListado.setText("amplis");
+        cargarListadoPorTipo("AMPLIFICADOR");
+    }//GEN-LAST:event_btnAmplificadoresActionPerformed
+
+    private void btnGuitarrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuitarrasActionPerformed
+        pruebaListado.setText("guitarras");
+        cargarListadoPorTipo("GUITARRA");
+    }//GEN-LAST:event_btnGuitarrasActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

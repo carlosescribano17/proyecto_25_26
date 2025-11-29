@@ -31,7 +31,7 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
+              <Group type="102" attributes="0">
                   <EmptySpace min="-2" pref="181" max="-2" attributes="0"/>
                   <Component id="pruebaListado" min="-2" pref="141" max="-2" attributes="0"/>
                   <EmptySpace pref="235" max="32767" attributes="0"/>
@@ -109,11 +109,17 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="amplificadores"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAmplificadoresActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnGuitarras">
           <Properties>
             <Property name="text" type="java.lang.String" value="guitarras"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnGuitarrasActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

@@ -20,6 +20,8 @@ public class jPanelVentas2 extends javax.swing.JPanel {
      */
     private CardLayout cardLayout;
     private JPanel panelVentana;
+    private panelProductos pProductos;
+    private panelCarrito pCarrito;
     
     public jPanelVentas2(Usuario user, CardLayout cardLayout,JPanel panelVentana) {
         initComponents();
@@ -27,10 +29,11 @@ public class jPanelVentas2 extends javax.swing.JPanel {
         this.cardLayout = cardLayout;
         this.panelVentana = panelVentana;
         
-        panelProductos pProductos = new panelProductos();
+        pProductos = new panelProductos();
         jPanelProductos2.add(pProductos, BorderLayout.CENTER);
         
-        
+        pCarrito = new panelCarrito();
+        jPanelCarrito2.add(pCarrito, BorderLayout.CENTER);
         
         revalidate();
         repaint();
@@ -48,6 +51,7 @@ public class jPanelVentas2 extends javax.swing.JPanel {
         jPanelProductos2 = new javax.swing.JPanel();
         jPanelCarrito2 = new javax.swing.JPanel();
         btnVolver = new javax.swing.JButton();
+        btnAnterior = new javax.swing.JButton();
 
         setMaximumSize(new java.awt.Dimension(2147483647, 2147483647));
         setPreferredSize(new java.awt.Dimension(2755, 982));
@@ -55,19 +59,13 @@ public class jPanelVentas2 extends javax.swing.JPanel {
         jPanelProductos2.setBackground(new java.awt.Color(102, 102, 102));
         jPanelProductos2.setLayout(new java.awt.BorderLayout());
 
-        javax.swing.GroupLayout jPanelCarrito2Layout = new javax.swing.GroupLayout(jPanelCarrito2);
-        jPanelCarrito2.setLayout(jPanelCarrito2Layout);
-        jPanelCarrito2Layout.setHorizontalGroup(
-            jPanelCarrito2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 419, Short.MAX_VALUE)
-        );
-        jPanelCarrito2Layout.setVerticalGroup(
-            jPanelCarrito2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
+        jPanelCarrito2.setLayout(new java.awt.BorderLayout());
 
         btnVolver.setText("Volver");
         btnVolver.addActionListener(this::btnVolverActionPerformed);
+
+        btnAnterior.setText("<--");
+        btnAnterior.addActionListener(this::btnAnteriorActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -76,8 +74,10 @@ public class jPanelVentas2 extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanelProductos2, javax.swing.GroupLayout.PREFERRED_SIZE, 856, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 1468, Short.MAX_VALUE)
-                .addComponent(jPanelCarrito2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(45, 45, 45)
+                .addComponent(btnAnterior, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 707, Short.MAX_VALUE)
+                .addComponent(jPanelCarrito2, javax.swing.GroupLayout.PREFERRED_SIZE, 1042, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -87,10 +87,15 @@ public class jPanelVentas2 extends javax.swing.JPanel {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanelProductos2, javax.swing.GroupLayout.DEFAULT_SIZE, 620, Short.MAX_VALUE)
-                    .addComponent(jPanelCarrito2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(15, 15, 15)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jPanelProductos2, javax.swing.GroupLayout.DEFAULT_SIZE, 620, Short.MAX_VALUE)
+                            .addComponent(jPanelCarrito2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(32, 32, 32)
+                        .addComponent(btnAnterior, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 295, Short.MAX_VALUE)
                 .addComponent(btnVolver)
                 .addGap(29, 29, 29))
@@ -102,8 +107,14 @@ public class jPanelVentas2 extends javax.swing.JPanel {
         cardLayout.show(panelVentana, "principal");
     }//GEN-LAST:event_btnVolverActionPerformed
 
+    private void btnAnteriorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnteriorActionPerformed
+        // TODO add your handling code here:
+        pProductos.mostrarTipos();
+    }//GEN-LAST:event_btnAnteriorActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAnterior;
     private javax.swing.JButton btnVolver;
     private javax.swing.JPanel jPanelCarrito2;
     private javax.swing.JPanel jPanelProductos2;
