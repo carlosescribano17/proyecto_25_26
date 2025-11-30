@@ -100,9 +100,9 @@ public class JDialogEfectivo extends javax.swing.JDialog {
     private void confirmarPago(java.awt.event.ActionEvent evt) {
 
         double total = carrito.calcularTotalPedido();
-
-        // Validar importe entregado
+        
         double entregado;
+        
         try {
             entregado = Double.parseDouble(jTextFieldEntrega.getText());
         } catch (NumberFormatException e) {
@@ -116,16 +116,16 @@ public class JDialogEfectivo extends javax.swing.JDialog {
         }
 
         double cambio = entregado - total;
-            jLabelCambio.setText("Cambio: " + String.format("%.2f", cambio) + " €");
+        jLabelCambio.setText("Cambio: " + String.format("%.2f", cambio) + " €");
 
+        panelVentas.hacerCompra("EFECTIVO");
+            
         JOptionPane.showMessageDialog(this, 
                 "Pago en efectivo registrado.\nCambio: " + String.format("%.2f", cambio) + " €",
-                "Pago completado", 
+                "Pago completado", -
                 JOptionPane.INFORMATION_MESSAGE);
-
-        dispose();
         
-        //FALTARÁ QUE ESTO ENVÍE LOS DATOS A LA BD
+        dispose();
     }
     
     

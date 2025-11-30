@@ -32,25 +32,22 @@ public class panelProductos extends javax.swing.JPanel {
         this.parent = parent;
         initComponents();
         
-        
-        // DAO
         pdao = new ProductoDAO();
 
-        // Preparar tabla (no la añadimos aún al initComponents para no tocar código generado)
         tablaListado = new JTable();
         modeloListado = new DefaultTableModel(new String[]{
             "id_producto", "nombre", "marca", "precio", "stock", "tipo_producto",
             "descripcion", "imagen_url", "activo", "fecha_alta"
         }, 0) {
+            //para que solo se pueda leer
             @Override
             public boolean isCellEditable(int row, int column) {
-                return false; // listado solo lectura
+                return false;
             }
         };
         tablaListado.setModel(modeloListado);
         scrollListado = new JScrollPane(tablaListado);
 
-        // Reemplazamos el contenido visual del panelListado por el scroll (limpiamos y usamos BorderLayout)
         panelListado.removeAll();
         panelListado.setLayout(new BorderLayout());
         panelListado.add(scrollListado, BorderLayout.CENTER);
@@ -63,7 +60,8 @@ public class panelProductos extends javax.swing.JPanel {
         tablaListado.addMouseListener(new java.awt.event.MouseAdapter() {
         @Override
         public void mouseClicked(java.awt.event.MouseEvent evt) {
-            if (evt.getClickCount() == 2) { // doble clic
+            //meter producto al carrito si se hace doble click
+            if (evt.getClickCount() == 2) {
                 pasarProductoAlCarrito();
             }
         }
@@ -71,18 +69,11 @@ public class panelProductos extends javax.swing.JPanel {
 
     }
 
-    /**
-     * Carga productos por tipo usando ProductoDAO y actualiza la tabla.
-     * tipo debe coincidir con los valores que haya en la BD (p.e. "ACCESORIO", "GUITARRA", "AMPLIFICADOR")
-     */
     public void cargarListadoPorTipo(String tipo) {
-        // Vaciar modelo
         modeloListado.setRowCount(0);
 
-        // Obtener lista desde DAO
         List<Producto> productos = pdao.listarPorTipo(tipo);
 
-        // Rellenar filas (asegúrate que getters coinciden con tu modelo)
         for (Producto p : productos) {
             Object[] fila = new Object[]{
                 p.getId_producto(),
@@ -99,7 +90,6 @@ public class panelProductos extends javax.swing.JPanel {
             modeloListado.addRow(fila);
         }
 
-        // Mostrar listado
         mostrarListado();
     }
     
@@ -118,6 +108,7 @@ public class panelProductos extends javax.swing.JPanel {
         if (fila == -1) return;
 
         Producto p = new Producto();
+        
         p.setId_producto((int) modeloListado.getValueAt(fila, 0));
         p.setNombre((String) modeloListado.getValueAt(fila, 1));
         p.setMarca((String) modeloListado.getValueAt(fila, 2));
@@ -140,17 +131,19 @@ public class panelProductos extends javax.swing.JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
         panelListado = new javax.swing.JPanel();
         pruebaListado = new javax.swing.JLabel();
         panelTipos = new javax.swing.JPanel();
-        btnAccesorios = new javax.swing.JButton();
         btnAmplificadores = new javax.swing.JButton();
+        btnAccesorios = new javax.swing.JButton();
         btnGuitarras = new javax.swing.JButton();
 
         setLayout(new java.awt.CardLayout());
 
         panelListado.setBackground(new java.awt.Color(0, 102, 255));
+        panelListado.setPreferredSize(null);
 
         pruebaListado.setText("jLabel1");
 
@@ -173,46 +166,44 @@ public class panelProductos extends javax.swing.JPanel {
 
         add(panelListado, "card2");
 
-        panelTipos.setBackground(new java.awt.Color(153, 102, 0));
-
-        btnAccesorios.setText("accesorios");
-        btnAccesorios.addActionListener(this::btnAccesoriosActionPerformed);
+        panelTipos.setBackground(new java.awt.Color(51, 102, 255));
+        panelTipos.setLayout(new java.awt.GridBagLayout());
 
         btnAmplificadores.setText("amplificadores");
         btnAmplificadores.addActionListener(this::btnAmplificadoresActionPerformed);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.ipadx = 60;
+        gridBagConstraints.ipady = 30;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.PAGE_END;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 2);
+        panelTipos.add(btnAmplificadores, gridBagConstraints);
+
+        btnAccesorios.setText("accesorios");
+        btnAccesorios.addActionListener(this::btnAccesoriosActionPerformed);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.ipadx = 60;
+        gridBagConstraints.ipady = 30;
+        gridBagConstraints.weighty = 0.1;
+        panelTipos.add(btnAccesorios, gridBagConstraints);
 
         btnGuitarras.setText("guitarras");
         btnGuitarras.addActionListener(this::btnGuitarrasActionPerformed);
-
-        javax.swing.GroupLayout panelTiposLayout = new javax.swing.GroupLayout(panelTipos);
-        panelTipos.setLayout(panelTiposLayout);
-        panelTiposLayout.setHorizontalGroup(
-            panelTiposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelTiposLayout.createSequentialGroup()
-                .addGap(91, 91, 91)
-                .addGroup(panelTiposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnAccesorios, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnAmplificadores, javax.swing.GroupLayout.DEFAULT_SIZE, 302, Short.MAX_VALUE)
-                    .addComponent(btnGuitarras, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(164, Short.MAX_VALUE))
-        );
-        panelTiposLayout.setVerticalGroup(
-            panelTiposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelTiposLayout.createSequentialGroup()
-                .addGap(50, 50, 50)
-                .addComponent(btnAmplificadores, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28)
-                .addComponent(btnGuitarras, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(35, 35, 35)
-                .addComponent(btnAccesorios, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.ipadx = 60;
+        gridBagConstraints.ipady = 30;
+        gridBagConstraints.weighty = 0.1;
+        panelTipos.add(btnGuitarras, gridBagConstraints);
 
         add(panelTipos, "card3");
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAccesoriosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAccesoriosActionPerformed
-        // TODO add your handling code here:
         pruebaListado.setText("accesorios");
         cargarListadoPorTipo("ACCESORIO");
     }//GEN-LAST:event_btnAccesoriosActionPerformed

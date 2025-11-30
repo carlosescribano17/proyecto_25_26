@@ -5,6 +5,7 @@
 package view;
 
 import java.awt.BorderLayout;
+import java.text.DecimalFormat;
 import java.util.*;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
@@ -72,7 +73,7 @@ public class panelCarrito extends javax.swing.JPanel {
             }
         }
 
-        // Si no existe lo añadimos
+        // si no esta el producto en el carrito lo añadimos
         double subtotal = p.getPrecio() * 1;
 
         modeloCarrito.addRow(new Object[]{
@@ -85,7 +86,9 @@ public class panelCarrito extends javax.swing.JPanel {
 
         carrito.add(p);
         
-        parent.cambiarTotal(String.valueOf(calcularTotalPedido()));
+        DecimalFormat formato = new DecimalFormat("#,###.00");
+        String total = formato.format(calcularTotalPedido());
+        parent.cambiarTotal(total);
     }
     
     public void eliminarProducto() {
@@ -97,10 +100,10 @@ public class panelCarrito extends javax.swing.JPanel {
         }
 
         int confirm = JOptionPane.showConfirmDialog(
-                this,
-                "¿Eliminar este producto del carrito?",
-                "Confirmar",
-                JOptionPane.YES_NO_OPTION
+            this,
+            "¿Eliminar este producto del carrito?",
+            "Confirmar",
+            JOptionPane.YES_NO_OPTION
         );
 
         if (confirm == JOptionPane.YES_OPTION) {
@@ -111,9 +114,10 @@ public class panelCarrito extends javax.swing.JPanel {
     
 
     public List<Producto> getCarrito() {
-         List<Producto> lista = new ArrayList<>();
+        List<Producto> lista = new ArrayList<>();
 
         for (int i = 0; i < modeloCarrito.getRowCount(); i++) {
+            
             int id = (int) modeloCarrito.getValueAt(i, 0);
             int cantidad = (int) modeloCarrito.getValueAt(i, 3);
 

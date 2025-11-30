@@ -1,7 +1,7 @@
 package model;
 
 public class Venta {
-
+    //variables
     private int idCliente;
     private int idEmpleado;
     private double total;
@@ -9,7 +9,7 @@ public class Venta {
     private double descuento;
     private String observaciones;
 
-    // Getters y setters
+    // getters y setters
 
     public int getIdCliente() { return idCliente; }
     public void setIdCliente(int idCliente) { this.idCliente = idCliente; }

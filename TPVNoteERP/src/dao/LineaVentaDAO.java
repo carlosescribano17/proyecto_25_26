@@ -5,7 +5,7 @@ import model.LineaVenta;
 import util.ConexionBD;
 
 public class LineaVentaDAO {
-
+    //crear linea de venta por cada producto de una venta
     public boolean crearLineaVenta(LineaVenta lv) {
         String sql = "INSERT INTO lineas_venta (id_venta, id_producto, cantidad, precio_unitario, subtotal) "
                    + "VALUES (?, ?, ?, ?, ?)";

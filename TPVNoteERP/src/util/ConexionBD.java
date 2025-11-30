@@ -13,6 +13,7 @@ import java.sql.SQLException;
  * @author DAM2Alu7
  */
 public class ConexionBD {
+    //conexion a la base de datos
     private static final String URL = "jdbc:mysql://localhost:3306/tpv_guitarras";
     private static final String USER = "root";
     private static final String PASSWORD = "root";

@@ -10,6 +10,7 @@ import java.sql.Timestamp;
  * @author DAM2Alu10
  */
 public class Producto {
+    //variables
     private int id_producto;
     private String nombre;
     private String marca;
@@ -20,10 +21,10 @@ public class Producto {
     private String imagen_url;
     private int activo;
     private Timestamp fecha_alta;
-    
+    //constructor vacio
     public Producto(){
     }
-
+    //constructor entero
     public Producto(int id_producto, String nombre, String marca, Double precio, int stock, String tipo_producto, String descripcion, String imagen_url, int activo, Timestamp fecha_alta) {
         this.id_producto = id_producto;
         this.nombre = nombre;
@@ -36,7 +37,7 @@ public class Producto {
         this.activo = activo;
         this.fecha_alta = fecha_alta;
     }
-
+    // getters y setters
     public int getId_producto() {
         return id_producto;
     }
@@ -116,7 +117,7 @@ public class Producto {
     public void setFecha_alta(Timestamp fecha_alta) {
         this.fecha_alta = fecha_alta;
     }
-
+    //to string para hacer pruebas
     @Override
     public String toString() {
         return "Producto{" + "id_producto=" + id_producto + ", nombre=" + nombre + ", marca=" + marca + ", precio=" + precio + ", stock=" + stock + ", tipo_producto=" + tipo_producto + ", descripcion=" + descripcion + ", imagen_url=" + imagen_url + ", activo=" + activo + ", fecha_alta=" + fecha_alta + '}';

@@ -18,14 +18,12 @@ public class TPVNoteERP {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
         try {
             UIManager.setLookAndFeel(new FlatMacDarkLaf());
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        // Crear y mostrar el login en el Event Dispatch Thread
         java.awt.EventQueue.invokeLater(() -> {
             LoginView1 lv = new LoginView1();
             lv.setVisible(true);

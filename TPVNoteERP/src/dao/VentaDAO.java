@@ -5,7 +5,7 @@ import util.ConexionBD;
 import model.Venta;
 
 public class VentaDAO {
-
+    //crear una venta nueva
     public int crearVenta(Venta v) {
         String sql = "INSERT INTO ventas (id_cliente, id_empleado, total, metodo_pago, descuento, observaciones) "
                 + "VALUES (?, ?, ?, ?, ?, ?)";
@@ -24,7 +24,7 @@ public class VentaDAO {
 
             ResultSet rs = ps.getGeneratedKeys();
             if (rs.next()) {
-                return rs.getInt(1); // id_venta
+                return rs.getInt(1);
             }
 
         } catch (SQLException e) {

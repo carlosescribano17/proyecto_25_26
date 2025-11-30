@@ -18,7 +18,7 @@ import util.ConexionBD;
 public class ClienteDAO {
    
     
-    
+    //sacar el nombre de todas las columnas en la base de datos
     public String[] obtenerNombresColumnas() {
         String sql = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS "
                    + "WHERE TABLE_SCHEMA = 'tpv_guitarras' "
@@ -43,7 +43,7 @@ public class ClienteDAO {
         }
     }
 
-    // Crear cliente
+    // crear cliente
     public boolean insertar(Cliente cliente) {
         String sql = "INSERT INTO clientes (dni, nombre, apellidos, telefono, email, direccion, fecha_registro) "
                 + "VALUES (?, ?, ?, ?, ?, ?, NOW())";
@@ -65,7 +65,7 @@ public class ClienteDAO {
         return false;
     }
 
-    // Leer cliente por ID
+    // devolver cliente por ID
     public Cliente obtenerPorId(int id) {
         String sql = "SELECT * FROM clientes WHERE id_cliente = ?";
         Cliente cliente = null;
@@ -85,7 +85,7 @@ public class ClienteDAO {
         return cliente;
     }
 
-    // Obtener todos los clientes
+    // lista de todos los clientes
     public List<Cliente> obtenerTodos() {
         List<Cliente> lista = new ArrayList<>();
         String sql = "SELECT * FROM clientes ORDER BY fecha_registro DESC";
@@ -105,7 +105,7 @@ public class ClienteDAO {
         return lista;
     }
 
-    // Actualizar un cliente
+    // actualizar un cliente
     public boolean actualizar(Cliente cliente) {
         String sql = "UPDATE clientes SET dni=?, nombre=?, apellidos=?, telefono=?, email=?, direccion=? "
                 + "WHERE id_cliente=?";
@@ -129,7 +129,7 @@ public class ClienteDAO {
         return false;
     }
 
-    // Borrar cliente
+    // borrar cliente
     public boolean eliminar(int id) {
         String sql = "DELETE FROM clientes WHERE id_cliente = ?";
 

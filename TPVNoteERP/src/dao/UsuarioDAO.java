@@ -22,6 +22,7 @@ import org.mindrot.jbcrypt.BCrypt;
  * @author DAM2Alu7
  */
 public class UsuarioDAO {
+    //autentificación de usuario al hacer login
     public Usuario autenticar(String nombreUsuario, String contrasena) {
         Usuario usuario = null;
         String sql = "SELECT * FROM empleados WHERE usuario=?";
@@ -30,7 +31,6 @@ public class UsuarioDAO {
             PreparedStatement ps = con.prepareStatement(sql)) {
             
             ps.setString(1, nombreUsuario);
-            //ps.setString(2, contrasena);
             ResultSet rs = ps.executeQuery();
             
             if (rs.next()) {
@@ -53,7 +53,7 @@ public class UsuarioDAO {
         }
         return usuario;
     }
-    
+    //borrar un usuario
     public boolean eliminar(int id) {
         String sql = "DELETE FROM empleados WHERE id_empleado = ?";
 
@@ -68,7 +68,7 @@ public class UsuarioDAO {
 
         return false;
     }
-    
+    //crear nuevo usuario
     public boolean insertar(Usuario usuario) {
         String sql = "INSERT INTO empleados (usuario, contrasena, nombre, apellidos, rol, activo, fecha_alta) "
                 + "VALUES (?, ?, ?, ?, ?, 1, NOW())";
@@ -91,7 +91,7 @@ public class UsuarioDAO {
         }
         return false;
     }
-    
+    //los nombres de las columnas de la tabla usuario
     public String[] obtenerNombresColumnas() {
         String sql = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS "
                    + "WHERE TABLE_SCHEMA = 'tpv_guitarras' "
@@ -118,7 +118,7 @@ public class UsuarioDAO {
             return new String[0];
         }
     }
-    
+    //mapea un resultado de consulta en un objeto usuario
     private Usuario mapearUsuario(ResultSet rs) throws SQLException {
         Usuario u = new Usuario();
         u.setId(rs.getInt("id_empleado"));
@@ -130,7 +130,7 @@ public class UsuarioDAO {
 
         return u;
     }
-    
+    //lista de todos los usuarios
     public List<Usuario> obtenerTodos() {
         List<Usuario> lista = new ArrayList<>();
         String sql = "SELECT * FROM empleados ORDER BY fecha_alta DESC";

@@ -22,7 +22,7 @@ public class Cliente {
     // Constructor vacío
     public Cliente() {}
 
-    // Constructor completo
+    // Constructor entero
     public Cliente(int idCliente, String dni, String nombre, String apellidos,
                    String telefono, String email, String direccion, Timestamp fecha_alta) {
         this.id_cliente = idCliente;

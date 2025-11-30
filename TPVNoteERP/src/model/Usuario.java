@@ -9,6 +9,7 @@ import java.sql.Timestamp;
  * @author DAM2Alu7
  */
 public class Usuario {
+    //variables
     private int id;
     private String usuario;
     private String contrasena;
@@ -16,9 +17,9 @@ public class Usuario {
     private String nombre;
     private String apellidos;
     private Timestamp fecha_alta;
-
+    //constructor vacio
     public Usuario() {}
-
+    //constructor lleno
     public Usuario(int id, String usuario, String contrasena, String rol, String nombre, String apellidos, Timestamp fecha_alta) {
         this.id = id;
         this.usuario = usuario;
@@ -28,7 +29,7 @@ public class Usuario {
         this.apellidos=apellidos;
         this.fecha_alta=fecha_alta;
     }
-
+    //getters y setters
     public int getId() { return id; }
     public String getUsuario() { return usuario; }
     public String getContrasena() { return contrasena; }

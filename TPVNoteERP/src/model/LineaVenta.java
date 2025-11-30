@@ -9,14 +9,14 @@ package model;
  * @author carlo
  */
 public class LineaVenta {
-
+    // variables
     private int idVenta;
     private int idProducto;
     private int cantidad;
     private double precioUnitario;
     private double subtotal;
 
-    // Getters & Setters
+    // getters y setters
     public int getIdVenta() { return idVenta; }
     public void setIdVenta(int idVenta) { this.idVenta = idVenta; }
 

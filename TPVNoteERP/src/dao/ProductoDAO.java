@@ -19,6 +19,7 @@ import java.util.List;
  * @author DAM2Alu10
  */
 public class ProductoDAO {
+    //actualizar un producto
     public Producto actualizar(Producto p){
         String sql = "UPDATE productos SET nombre=?, marca=?, precio=?, stock=?, tipo_producto=?, descripcion=?, imagen_url=?, activo=? WHERE id_producto=?";
         try(Connection con = ConexionBD.getConexion();
@@ -40,7 +41,7 @@ public class ProductoDAO {
         }
         return p;
     }
-    
+    //sacar los nombres de las columnas
     public String[] obtenerNombresColumnas() {
         String sql = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS "
                    + "WHERE TABLE_SCHEMA = 'tpv_guitarras' "
@@ -64,7 +65,7 @@ public class ProductoDAO {
             return new String[0];
         }
     }
-    
+    //listar todos los productos de un tipo en concreto
     public List<Producto> listarPorTipo(String tipo) {
     List<Producto> productos = new ArrayList<>();
     String sql = "SELECT * FROM productos WHERE tipo_producto = ? AND activo = TRUE ORDER BY id_producto";
@@ -100,7 +101,7 @@ public class ProductoDAO {
     
     return productos;
 }
-    
+    //listar todos los productos
     public List<Producto> listarTodos() {
     List<Producto> productos = new ArrayList<>();
     String sql = "SELECT * FROM productos WHERE activo = TRUE ORDER BY id_producto";
@@ -134,7 +135,7 @@ public class ProductoDAO {
     
     return productos;
     }
-    
+    //borrar un producto
     public boolean borrar(int idProducto) {
         String sql = "DELETE FROM productos WHERE id_producto = ?";
         try (Connection con = ConexionBD.getConexion();
@@ -148,7 +149,7 @@ public class ProductoDAO {
             return false;
         }
     }
-    
+    //crear nuevo producto
     public boolean crear(Producto p) {
         String sql = "INSERT INTO productos (nombre, marca, precio, stock, tipo_producto, descripcion, imagen_url, activo, fecha_alta) "
                    + "VALUES (?, ?, ?, ?, ?, ?, ?, 1, NOW())";

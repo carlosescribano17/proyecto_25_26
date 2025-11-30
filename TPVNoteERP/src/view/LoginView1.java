@@ -37,7 +37,7 @@ public class LoginView1 extends javax.swing.JFrame {
         if (u != null) {
             JOptionPane.showMessageDialog(this, "Bienvenido " + u.getUsuario() + " (" + u.getRol() + ")");
             dispose(); // Cierra login
-            // Aquí abrirías el menú principal (por ahora lo dejamos así)
+            // se abre el menu principal
             MenuPrincipal menu = new MenuPrincipal(u);
             menu.setVisible(true);
         } else {
@@ -70,12 +70,6 @@ public class LoginView1 extends javax.swing.JFrame {
 
         jLabel1.setText("Usuario:");
         jPanel1.add(jLabel1);
-
-        txtUsuario.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtUsuarioActionPerformed(evt);
-            }
-        });
         jPanel1.add(txtUsuario);
 
         jLabel2.setText("Contraseña:");
@@ -127,16 +121,9 @@ public class LoginView1 extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUsuarioActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtUsuarioActionPerformed
-
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
-        // TODO add your handling code here:
         autenticar();
     }//GEN-LAST:event_btnLoginActionPerformed
-    
-    
     
     /**
      * @param args the command line arguments

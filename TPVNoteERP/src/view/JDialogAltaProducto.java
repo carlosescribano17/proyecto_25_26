@@ -74,12 +74,6 @@ public class JDialogAltaProducto extends javax.swing.JDialog {
 
         jLabel3.setText("Marca");
         jPanel2.add(jLabel3);
-
-        jTextFieldMarca.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldMarcaActionPerformed(evt);
-            }
-        });
         jPanel2.add(jTextFieldMarca);
 
         jLabel4.setText("Tipo de Producto");
@@ -145,10 +139,6 @@ public class JDialogAltaProducto extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jTextFieldMarcaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldMarcaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldMarcaActionPerformed
 
     private void jButtonEnviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEnviarActionPerformed
         Producto nuevo = new Producto ();

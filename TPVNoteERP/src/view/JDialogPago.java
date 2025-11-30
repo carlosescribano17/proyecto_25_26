@@ -90,54 +90,7 @@ public class JDialogPago extends javax.swing.JDialog {
 
     private void jButtonTarjetaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonTarjetaActionPerformed
         
-        double total = carrito.calcularTotalPedido();
-    
-        // EMPLEADO LOGADO → LO TIENES EN jPanelVentas2 (user)
-        int idEmpleado = panelVentas.getUser().getId();
-
-        // CLIENTE SELECCIONADO
-        int idCliente = 0;
-        String cliente = panelVentas.getClienteSeleccionado();
-
-        if (!cliente.equals("INVITADO")) {
-            idCliente = Integer.parseInt(cliente.split("-")[0]);
-        }
-
-        // 1. CREAR OBJETO VENTA
-        Venta venta = new Venta();
-        venta.setIdCliente(idCliente);
-        venta.setIdEmpleado(idEmpleado);
-        venta.setMetodoPago("TARJETA");
-        venta.setDescuento(0);
-        venta.setObservaciones(null);
-        venta.setTotal(total);
-
-        // 2. GUARDAR VENTA EN BD
-        VentaDAO vdao = new VentaDAO();
-        int idVentaGenerada = vdao.crearVenta(venta);
-
-        if (idVentaGenerada <= 0) {
-            JOptionPane.showMessageDialog(this, "Error guardando la venta en BD.", "ERROR", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
-        // 3. GUARDAR LÍNEAS DE VENTA
-        LineaVentaDAO lvdao = new LineaVentaDAO();
-
-        for (int i = 0; i < carrito.getModelo().getRowCount(); i++) {
-
-            LineaVenta lv = new LineaVenta();
-            lv.setIdVenta(idVentaGenerada);
-
-            lv.setIdProducto((int) carrito.getModelo().getValueAt(i, 0));     // ID producto
-            lv.setCantidad((int) carrito.getModelo().getValueAt(i, 3));       // cantidad
-            lv.setPrecioUnitario((double) carrito.getModelo().getValueAt(i, 2));
-            lv.setSubtotal((double) carrito.getModelo().getValueAt(i, 4));
-
-            lvdao.crearLineaVenta(lv);
-        }
-
-        
+        panelVentas.hacerCompra("TARJETA");
         
         carrito.vaciarCarrito();
         
@@ -145,8 +98,7 @@ public class JDialogPago extends javax.swing.JDialog {
                 "Venta realizada con éxito.",
                 "Pago completado", 
                 JOptionPane.INFORMATION_MESSAGE);
-
-        // Cerrar ventana
+        
         dispose();
     }//GEN-LAST:event_jButtonTarjetaActionPerformed
 
@@ -160,18 +112,6 @@ public class JDialogPago extends javax.swing.JDialog {
         jde.setLocationRelativeTo(this);
         jde.setVisible(true);
     }//GEN-LAST:event_jButtonEfectivoActionPerformed
-
-    private void abrirPagoEfectivo() {
-        JDialogEfectivo jde = new JDialogEfectivo(
-                (Frame) this.getParent(),
-                true,
-                carrito,
-                panelVentas
-        );
-        jde.setLocationRelativeTo(this);
-        jde.setVisible(true);
-    }
-
 
     /**
      * @param args the command line arguments

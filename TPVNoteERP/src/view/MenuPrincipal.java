@@ -141,8 +141,8 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
     public void cargarProductosPorTipo() {
         cargandoTablas = true;
-// Limpiar la tabla        
-    dtm.setRowCount(0);
+        // limpiar la tabla        
+        dtm.setRowCount(0);
 
         String tipoSeleccionado = (String) jComboBoxTipoProducto.getSelectedItem();
 
@@ -153,7 +153,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
             productos = pdao.listarPorTipo(tipoSeleccionado);
         }
 
-        // Agregar productos a la tabla
+        // agregar productos a la tabla
         for (Producto p : productos) {
             Object[] fila = new Object[]{
                 p.getId_producto(),
@@ -195,12 +195,12 @@ public class MenuPrincipal extends javax.swing.JFrame {
     
     public void cargarClientes() {
         cargandoTablas = true;
-        // Limpiar la tabla
+        // limpiar la tabla
         dtmc.setRowCount(0);
 
         List<Cliente> clientes = cdao.obtenerTodos();
 
-        // Agregar clientes a la tabla
+        // agregar clientes a la tabla
         for (Cliente c : clientes) {
             Object[] fila = new Object[]{
                 c.getIdCliente(),
@@ -242,16 +242,6 @@ public class MenuPrincipal extends javax.swing.JFrame {
         btnUsuarios = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
         jLabelUsuario = new javax.swing.JLabel();
-        jPanelVentas = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        btnVolverVentas = new javax.swing.JButton();
-        jPanelProductos = new javax.swing.JPanel();
-        jPanelTipos = new javax.swing.JPanel();
-        jButtonGuitarras = new javax.swing.JButton();
-        jButtonAmplificadores = new javax.swing.JButton();
-        jButtonAccesorios = new javax.swing.JButton();
-        jPanelListaProductos = new javax.swing.JPanel();
-        jPanelCarrito = new javax.swing.JPanel();
         jPanelClientes = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         btnVolverClientes = new javax.swing.JButton();
@@ -371,148 +361,6 @@ public class MenuPrincipal extends javax.swing.JFrame {
         );
 
         jPanelVentanaUnica.add(jPanelPrincipal, "principal");
-
-        jLabel1.setText("Ventas");
-
-        btnVolverVentas.setText("Volver");
-        btnVolverVentas.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnVolverVentasActionPerformed(evt);
-            }
-        });
-
-        jPanelProductos.setBackground(new java.awt.Color(102, 102, 102));
-
-        jButtonGuitarras.setText("GUITARRAS");
-        jButtonGuitarras.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonGuitarrasActionPerformed(evt);
-            }
-        });
-
-        jButtonAmplificadores.setText("AMPLIFICADORES");
-        jButtonAmplificadores.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonAmplificadoresActionPerformed(evt);
-            }
-        });
-
-        jButtonAccesorios.setText("ACCESORIOS");
-        jButtonAccesorios.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonAccesoriosActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanelTiposLayout = new javax.swing.GroupLayout(jPanelTipos);
-        jPanelTipos.setLayout(jPanelTiposLayout);
-        jPanelTiposLayout.setHorizontalGroup(
-            jPanelTiposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelTiposLayout.createSequentialGroup()
-                .addGap(261, 261, 261)
-                .addGroup(jPanelTiposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButtonAccesorios, javax.swing.GroupLayout.PREFERRED_SIZE, 343, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonAmplificadores, javax.swing.GroupLayout.PREFERRED_SIZE, 343, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonGuitarras, javax.swing.GroupLayout.PREFERRED_SIZE, 343, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(335, 335, 335))
-        );
-        jPanelTiposLayout.setVerticalGroup(
-            jPanelTiposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelTiposLayout.createSequentialGroup()
-                .addGap(115, 115, 115)
-                .addComponent(jButtonGuitarras, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(58, 58, 58)
-                .addComponent(jButtonAmplificadores, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(63, 63, 63)
-                .addComponent(jButtonAccesorios, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-
-        javax.swing.GroupLayout jPanelListaProductosLayout = new javax.swing.GroupLayout(jPanelListaProductos);
-        jPanelListaProductos.setLayout(jPanelListaProductosLayout);
-        jPanelListaProductosLayout.setHorizontalGroup(
-            jPanelListaProductosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 918, Short.MAX_VALUE)
-        );
-        jPanelListaProductosLayout.setVerticalGroup(
-            jPanelListaProductosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 601, Short.MAX_VALUE)
-        );
-
-        javax.swing.GroupLayout jPanelProductosLayout = new javax.swing.GroupLayout(jPanelProductos);
-        jPanelProductos.setLayout(jPanelProductosLayout);
-        jPanelProductosLayout.setHorizontalGroup(
-            jPanelProductosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelProductosLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanelTipos, javax.swing.GroupLayout.PREFERRED_SIZE, 918, Short.MAX_VALUE)
-                .addContainerGap())
-            .addGroup(jPanelProductosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanelProductosLayout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(jPanelListaProductos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addContainerGap()))
-        );
-        jPanelProductosLayout.setVerticalGroup(
-            jPanelProductosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelProductosLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanelTipos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-            .addGroup(jPanelProductosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelProductosLayout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(jPanelListaProductos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addContainerGap()))
-        );
-
-        jPanelCarrito.setBackground(new java.awt.Color(102, 102, 102));
-
-        javax.swing.GroupLayout jPanelCarritoLayout = new javax.swing.GroupLayout(jPanelCarrito);
-        jPanelCarrito.setLayout(jPanelCarritoLayout);
-        jPanelCarritoLayout.setHorizontalGroup(
-            jPanelCarritoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 790, Short.MAX_VALUE)
-        );
-        jPanelCarritoLayout.setVerticalGroup(
-            jPanelCarritoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-
-        javax.swing.GroupLayout jPanelVentasLayout = new javax.swing.GroupLayout(jPanelVentas);
-        jPanelVentas.setLayout(jPanelVentasLayout);
-        jPanelVentasLayout.setHorizontalGroup(
-            jPanelVentasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelVentasLayout.createSequentialGroup()
-                .addGap(37, 37, 37)
-                .addGroup(jPanelVentasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanelVentasLayout.createSequentialGroup()
-                        .addGroup(jPanelVentasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanelVentasLayout.createSequentialGroup()
-                                .addComponent(jPanelProductos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 930, Short.MAX_VALUE)
-                                .addComponent(jPanelCarrito, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(btnVolverVentas))
-                        .addGap(68, 68, 68))
-                    .addGroup(jPanelVentasLayout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-        );
-        jPanelVentasLayout.setVerticalGroup(
-            jPanelVentasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelVentasLayout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanelVentasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanelCarrito, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanelProductos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 207, Short.MAX_VALUE)
-                .addComponent(btnVolverVentas)
-                .addGap(47, 47, 47))
-        );
-
-        jPanelVentanaUnica.add(jPanelVentas, "ventas");
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -824,28 +672,19 @@ public class MenuPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClientesActionPerformed
-        // TODO add your handling code here:
         cardLayout.show(jPanelVentanaUnica,"clientes");
         cargarClientes();
     }//GEN-LAST:event_btnClientesActionPerformed
 
     private void btnVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVentasActionPerformed
-        //cardLayout.show(jPanelVentanaUnica,"ventas");
         cardLayout.show(jPanelVentanaUnica, "ventas2");
     }//GEN-LAST:event_btnVentasActionPerformed
     
-    private void btnVolverVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverVentasActionPerformed
-        // TODO add your handling code here:
-        cardLayout.show(jPanelVentanaUnica,"principal");
-    }//GEN-LAST:event_btnVolverVentasActionPerformed
-
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
-        // TODO add your handling code here:
         System.exit(0);
     }//GEN-LAST:event_btnSalirActionPerformed
 
     private void btnVolverClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverClientesActionPerformed
-        // TODO add your handling code here:
         cardLayout.show(jPanelVentanaUnica,"principal");
     }//GEN-LAST:event_btnVolverClientesActionPerformed
 
@@ -855,27 +694,22 @@ public class MenuPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnArticulosActionPerformed
 
     private void btnVolverArticulosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverArticulosActionPerformed
-        // TODO add your handling code here:
         cardLayout.show(jPanelVentanaUnica,"principal");
     }//GEN-LAST:event_btnVolverArticulosActionPerformed
 
     private void btnVolverStockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverStockActionPerformed
-        // TODO add your handling code here:
         cardLayout.show(jPanelVentanaUnica,"principal");
     }//GEN-LAST:event_btnVolverStockActionPerformed
 
     private void btnInformesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInformesActionPerformed
-        // TODO add your handling code here:
         cardLayout.show(jPanelVentanaUnica,"stock");
     }//GEN-LAST:event_btnInformesActionPerformed
 
     private void btnVolverUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverUsuariosActionPerformed
-        // TODO add your handling code here:
         cardLayout.show(jPanelVentanaUnica,"principal");                 
     }//GEN-LAST:event_btnVolverUsuariosActionPerformed
 
     private void btnUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUsuariosActionPerformed
-        // TODO add your handling code here:
         cardLayout.show(jPanelVentanaUnica,"usuarios");
         cargarUsuarios();
     }//GEN-LAST:event_btnUsuariosActionPerformed
@@ -1035,7 +869,6 @@ public class MenuPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonBorrarClientActionPerformed
 
     private void jButtonBorrarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBorrarUsuarioActionPerformed
-        // TODO add your handling code here:
         int[] filas = jTableUsuarios.getSelectedRows();
 
         if (filas.length == 0) {
@@ -1056,14 +889,21 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
             int fila = filas[i];
             int idUsuario = (int) jTableUsuarios.getValueAt(fila, 0);
-
-            if (udao.eliminar(idUsuario)) {
+            
+            if(userActual.getId()==idUsuario){
+                JOptionPane.showMessageDialog(this,
+                        "No es posible borrar el usuario actual",
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE);
+                return;
+            } else if(udao.eliminar(idUsuario)) {
                 dtmu.removeRow(fila);
             } else {
                 JOptionPane.showMessageDialog(this,
                         "Error al borrar el usuario con ID: " + idUsuario,
                         "Error",
                         JOptionPane.ERROR_MESSAGE);
+                return;
             }
         }
 
@@ -1071,22 +911,9 @@ public class MenuPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonBorrarUsuarioActionPerformed
 
     private void jButtonNuevoUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNuevoUsuarioActionPerformed
-        // TODO add your handling code here:
         JDialogAltaUsuario jdu = new JDialogAltaUsuario(this, true);
         jdu.setVisible(true);
     }//GEN-LAST:event_jButtonNuevoUsuarioActionPerformed
-
-    private void jButtonGuitarrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuitarrasActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButtonGuitarrasActionPerformed
-
-    private void jButtonAmplificadoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAmplificadoresActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButtonAmplificadoresActionPerformed
-
-    private void jButtonAccesoriosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAccesoriosActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButtonAccesoriosActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1103,20 +930,15 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton btnVolverClientes;
     private javax.swing.JButton btnVolverStock;
     private javax.swing.JButton btnVolverUsuarios;
-    private javax.swing.JButton btnVolverVentas;
-    private javax.swing.JButton jButtonAccesorios;
-    private javax.swing.JButton jButtonAmplificadores;
     private javax.swing.JButton jButtonBorrar;
     private javax.swing.JButton jButtonBorrarClient;
     private javax.swing.JButton jButtonBorrarUsuario;
-    private javax.swing.JButton jButtonGuitarras;
     private javax.swing.JButton jButtonModificar;
     private javax.swing.JButton jButtonModificarClient;
     private javax.swing.JButton jButtonNuevo;
     private javax.swing.JButton jButtonNuevoClient;
     private javax.swing.JButton jButtonNuevoUsuario;
     private javax.swing.JComboBox<String> jComboBoxTipoProducto;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -1125,16 +947,11 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanelArticulos;
-    private javax.swing.JPanel jPanelCarrito;
     private javax.swing.JPanel jPanelClientes;
     private javax.swing.JPanel jPanelInformes;
-    private javax.swing.JPanel jPanelListaProductos;
     private javax.swing.JPanel jPanelPrincipal;
-    private javax.swing.JPanel jPanelProductos;
-    private javax.swing.JPanel jPanelTipos;
     private javax.swing.JPanel jPanelUsuarios;
     private javax.swing.JPanel jPanelVentanaUnica;
-    private javax.swing.JPanel jPanelVentas;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
