@@ -5,10 +5,15 @@
 package view;
 
 import com.formdev.flatlaf.themes.FlatMacDarkLaf;
+import com.google.gson.Gson;
 import dao.ClienteDAO;
 import dao.ProductoDAO;
 import dao.UsuarioDAO;
 import java.awt.CardLayout;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import javax.swing.JFrame;
 import javax.swing.UIManager;
 import model.Producto;
@@ -16,7 +21,9 @@ import model.Usuario;
 import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.List;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import model.Cliente;
 
@@ -221,7 +228,22 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
         jTableClientes.revalidate();
         jTableClientes.repaint();
-}
+    }
+    
+    public void cargarJson(File f){
+        Gson gson = new Gson();
+        try {
+            String fichero = new String(Files.readAllBytes(Paths.get(f.getPath())));
+            List<Producto> productos = Arrays.asList(gson.fromJson(fichero, Producto[].class));
+            for(Producto p : productos){
+                pdao.crear(p);
+            }
+            JOptionPane.showMessageDialog(this, "Articulos cargados correctamente", "Insertar Articulos", JOptionPane.INFORMATION_MESSAGE);
+            cargarProductosPorTipo();
+        } catch (IOException ex) {
+            System.getLogger(MenuPrincipal.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -259,6 +281,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jComboBoxTipoProducto = new javax.swing.JComboBox<>();
         jButtonModificar = new javax.swing.JButton();
         jButtonNuevo = new javax.swing.JButton();
+        btnJson = new javax.swing.JButton();
         jPanelInformes = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         btnVolverStock = new javax.swing.JButton();
@@ -338,11 +361,11 @@ public class MenuPrincipal extends javax.swing.JFrame {
             jPanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelPrincipalLayout.createSequentialGroup()
                 .addGap(14, 14, 14)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 958, Short.MAX_VALUE)
-                .addGap(18, 18, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 964, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
                 .addComponent(jLabelUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 771, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 958, Short.MAX_VALUE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 964, Short.MAX_VALUE)
                 .addGap(16, 16, 16))
         );
         jPanelPrincipalLayout.setVerticalGroup(
@@ -352,12 +375,10 @@ public class MenuPrincipal extends javax.swing.JFrame {
                 .addGroup(jPanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanelPrincipalLayout.createSequentialGroup()
                         .addComponent(jLabelUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanelPrincipalLayout.createSequentialGroup()
-                        .addGroup(jPanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 954, Short.MAX_VALUE)
-                            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(14, 14, 14))))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 954, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(14, 14, 14))
         );
 
         jPanelVentanaUnica.add(jPanelPrincipal, "principal");
@@ -507,29 +528,39 @@ public class MenuPrincipal extends javax.swing.JFrame {
             }
         });
 
+        btnJson.setText("Insertar desde JSON");
+        btnJson.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnJsonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanelArticulosLayout = new javax.swing.GroupLayout(jPanelArticulos);
         jPanelArticulos.setLayout(jPanelArticulosLayout);
         jPanelArticulosLayout.setHorizontalGroup(
             jPanelArticulosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelArticulosLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButtonNuevo)
-                .addGap(55, 55, 55)
-                .addComponent(jButtonModificar)
-                .addGap(51, 51, 51)
-                .addComponent(jButtonBorrar)
-                .addGap(76, 76, 76)
-                .addComponent(btnVolverArticulos)
-                .addGap(68, 68, 68))
             .addGroup(jPanelArticulosLayout.createSequentialGroup()
                 .addGap(268, 268, 268)
                 .addGroup(jPanelArticulosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1560, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanelArticulosLayout.createSequentialGroup()
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(510, 510, 510)
-                        .addComponent(jComboBoxTipoProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 317, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(927, Short.MAX_VALUE))
+                        .addComponent(btnJson)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButtonNuevo)
+                        .addGap(55, 55, 55)
+                        .addComponent(jButtonModificar)
+                        .addGap(51, 51, 51)
+                        .addComponent(jButtonBorrar)
+                        .addGap(76, 76, 76)
+                        .addComponent(btnVolverArticulos)
+                        .addGap(68, 68, 68))
+                    .addGroup(jPanelArticulosLayout.createSequentialGroup()
+                        .addGroup(jPanelArticulosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1560, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanelArticulosLayout.createSequentialGroup()
+                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(510, 510, 510)
+                                .addComponent(jComboBoxTipoProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 317, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap(927, Short.MAX_VALUE))))
         );
         jPanelArticulosLayout.setVerticalGroup(
             jPanelArticulosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -545,7 +576,8 @@ public class MenuPrincipal extends javax.swing.JFrame {
                     .addComponent(btnVolverArticulos)
                     .addComponent(jButtonBorrar)
                     .addComponent(jButtonModificar)
-                    .addComponent(jButtonNuevo))
+                    .addComponent(jButtonNuevo)
+                    .addComponent(btnJson))
                 .addGap(47, 47, 47))
         );
 
@@ -915,6 +947,23 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jdu.setVisible(true);
     }//GEN-LAST:event_jButtonNuevoUsuarioActionPerformed
 
+    private void btnJsonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnJsonActionPerformed
+        // TODO add your handling code here:
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setFileFilter(new FileNameExtensionFilter("*.json", "json"));
+        int r= fileChooser.showOpenDialog(this);
+        
+        if(r== JFileChooser.APPROVE_OPTION){
+            File archivo = fileChooser.getSelectedFile();
+            cargarJson(archivo);
+        }else{
+            JOptionPane.showMessageDialog(this,
+                            "Ha ocurrido un error, Debe seleccionar un Json válido.",
+                            "Error",
+                            JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnJsonActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -923,6 +972,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton btnArticulos;
     private javax.swing.JButton btnClientes;
     private javax.swing.JButton btnInformes;
+    private javax.swing.JButton btnJson;
     private javax.swing.JButton btnSalir;
     private javax.swing.JButton btnUsuarios;
     private javax.swing.JButton btnVentas;

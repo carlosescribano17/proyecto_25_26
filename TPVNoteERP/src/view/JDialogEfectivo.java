@@ -124,7 +124,7 @@ public class JDialogEfectivo extends javax.swing.JDialog {
                 "Pago en efectivo registrado.\nCambio: " + String.format("%.2f", cambio) + " €",
                 "Pago completado", -
                 JOptionPane.INFORMATION_MESSAGE);
-        
+        carrito.vaciarCarrito();
         dispose();
     }
     
