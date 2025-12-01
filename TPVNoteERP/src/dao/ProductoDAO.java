@@ -176,6 +176,43 @@ public class ProductoDAO {
             return false;
         }
     }
+    
+    public int getStock(int id){
+        String sql = "SELECT stock FROM productos WHERE  id_producto = ?";
+        
+        try (Connection con = ConexionBD.getConexion();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            
+            ps.setInt(1,id);
+            ResultSet rs = ps.executeQuery();
+            
+            while (rs.next()){
+                return rs.getInt("stock");
+            }
+            
+        }catch (SQLException e) {
+            e.printStackTrace();
+            return 0;
+        }
+        return 0;
+    }
 
+    public boolean restarStock(int id, int cantidad, int stockActual) {
+        String sql = "UPDATE productos SET stock=? WHERE id_producto = ?";
+        
+        try (Connection con = ConexionBD.getConexion();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            
+            ps.setInt(1,stockActual-cantidad);
+            ps.setInt(2, id);
+            ps.executeUpdate();
+            
+            return true;
+            
+        }catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
     
 }

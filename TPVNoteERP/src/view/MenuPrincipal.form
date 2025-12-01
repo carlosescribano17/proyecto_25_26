@@ -479,7 +479,7 @@
           <SubComponents>
             <Component class="javax.swing.JLabel" name="jLabel4">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Stock"/>
+                <Property name="text" type="java.lang.String" value="Informes  (se implementar&#xe1; en el futuro)"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JButton" name="btnVolverStock">

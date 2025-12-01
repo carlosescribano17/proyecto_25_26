@@ -583,7 +583,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
         jPanelVentanaUnica.add(jPanelArticulos, "articulos");
 
-        jLabel4.setText("Stock");
+        jLabel4.setText("Informes  (se implementará en el futuro)");
 
         btnVolverStock.setText("Volver");
         btnVolverStock.addActionListener(new java.awt.event.ActionListener() {

@@ -6,6 +6,7 @@ package view;
 
 import dao.ClienteDAO;
 import dao.LineaVentaDAO;
+import dao.ProductoDAO;
 import dao.VentaDAO;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
@@ -35,6 +36,7 @@ public class jPanelVentas2 extends javax.swing.JPanel {
     private panelCarrito pCarrito;
     private ClienteDAO cdao;
     private Usuario user;
+    private ProductoDAO pdao;
     
     public jPanelVentas2(Usuario user, CardLayout cardLayout,JPanel panelVentana) {
         initComponents();
@@ -112,6 +114,8 @@ public class jPanelVentas2 extends javax.swing.JPanel {
         
         //se guardan las lineas de ventas por cada producto en el carrito
         LineaVentaDAO lvdao = new LineaVentaDAO();
+        
+        int error = 0;
 
         for (int i = 0; i < pCarrito.getModelo().getRowCount(); i++) {
 
@@ -124,6 +128,23 @@ public class jPanelVentas2 extends javax.swing.JPanel {
             lv.setSubtotal((double) pCarrito.getModelo().getValueAt(i, 4));
 
             lvdao.crearLineaVenta(lv);
+            
+            pdao = new ProductoDAO();
+            int id = (int) pCarrito.getModelo().getValueAt(i, 0);
+            int stock  = pdao.getStock(id);
+            int cantidad = (int) pCarrito.getModelo().getValueAt(i, 3);
+             System.out.println(id + "-" +  stock + "-" + cantidad);
+            if (pdao.restarStock(id, cantidad, stock)){
+                error = 1;
+            }else {
+                error = 2;
+            }
+        }
+        if (error == 1) {
+            JOptionPane.showMessageDialog(this, "Stock actualizado.", "CONFIRMACIÓN", JOptionPane.INFORMATION_MESSAGE);
+        }
+        else if(error == 2) {
+            JOptionPane.showMessageDialog(this, "Error al actualizar stock.", "ERROR", JOptionPane.ERROR_MESSAGE);
         }
     }
 

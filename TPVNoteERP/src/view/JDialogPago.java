@@ -111,6 +111,8 @@ public class JDialogPago extends javax.swing.JDialog {
         );
         jde.setLocationRelativeTo(this);
         jde.setVisible(true);
+        
+        dispose();
     }//GEN-LAST:event_jButtonEfectivoActionPerformed
 
     /**
