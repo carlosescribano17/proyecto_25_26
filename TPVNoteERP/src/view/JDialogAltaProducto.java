@@ -48,11 +48,12 @@ public class JDialogAltaProducto extends javax.swing.JDialog {
         jLabel4 = new javax.swing.JLabel();
         jComboBoxTipoProd = new javax.swing.JComboBox<>();
         jLabel5 = new javax.swing.JLabel();
-        jSpinnerPrecio = new javax.swing.JSpinner();
+        jTextFieldPrecio = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         jSpinnerStock = new javax.swing.JSpinner();
         jLabel7 = new javax.swing.JLabel();
-        jTextFieldDescripción = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTextAreaDescripcion = new javax.swing.JTextArea();
         jLabel8 = new javax.swing.JLabel();
         jTextFieldImagenURL = new javax.swing.JTextField();
         jButtonEnviar = new javax.swing.JButton();
@@ -84,9 +85,7 @@ public class JDialogAltaProducto extends javax.swing.JDialog {
 
         jLabel5.setText("Precio");
         jPanel2.add(jLabel5);
-
-        jSpinnerPrecio.setModel(new javax.swing.SpinnerNumberModel(0.0d, 0.0d, null, 1.0d));
-        jPanel2.add(jSpinnerPrecio);
+        jPanel2.add(jTextFieldPrecio);
 
         jLabel6.setText("Stock");
         jPanel2.add(jLabel6);
@@ -96,7 +95,12 @@ public class JDialogAltaProducto extends javax.swing.JDialog {
 
         jLabel7.setText("Descripción");
         jPanel2.add(jLabel7);
-        jPanel2.add(jTextFieldDescripción);
+
+        jTextAreaDescripcion.setColumns(20);
+        jTextAreaDescripcion.setRows(5);
+        jScrollPane1.setViewportView(jTextAreaDescripcion);
+
+        jPanel2.add(jScrollPane1);
 
         jLabel8.setText("Imagen URL");
         jPanel2.add(jLabel8);
@@ -144,10 +148,10 @@ public class JDialogAltaProducto extends javax.swing.JDialog {
         Producto nuevo = new Producto ();
                 nuevo.setNombre(jTextFieldNombre.getText());
                 nuevo.setMarca(jTextFieldMarca.getText());
-                nuevo.setPrecio((Double) jSpinnerPrecio.getValue());
+                nuevo.setPrecio(Double.valueOf(jTextFieldPrecio.getText()));
                 nuevo.setStock((int) jSpinnerStock.getValue());
                 nuevo.setTipo_producto(jComboBoxTipoProd.getSelectedItem().toString());
-                nuevo.setDescripcion(jTextFieldDescripción.getText());
+                nuevo.setDescripcion(jTextAreaDescripcion.getText());
                 nuevo.setImagen_url(jTextFieldImagenURL.getText());
                 //nuevo.setFecha_alta(NOW());
                 ProductoDAO pdao = new ProductoDAO();
@@ -215,12 +219,13 @@ public class JDialogAltaProducto extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabelNombre;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JSpinner jSpinnerPrecio;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSpinner jSpinnerStock;
+    private javax.swing.JTextArea jTextAreaDescripcion;
     private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextFieldDescripción;
     private javax.swing.JTextField jTextFieldImagenURL;
     private javax.swing.JTextField jTextFieldMarca;
     private javax.swing.JTextField jTextFieldNombre;
+    private javax.swing.JTextField jTextFieldPrecio;
     // End of variables declaration//GEN-END:variables
 }

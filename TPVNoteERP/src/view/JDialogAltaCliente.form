@@ -85,28 +85,28 @@
       <SubComponents>
         <Component class="javax.swing.JLabel" name="jLabel2">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Nombre"/>
+            <Property name="text" type="java.lang.String" value="Nombre                                           *"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldNombreCliente">
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel3">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Apellidos"/>
+            <Property name="text" type="java.lang.String" value="Apellidos                                         *"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldApellidoCliente">
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel4">
           <Properties>
-            <Property name="text" type="java.lang.String" value="DNI"/>
+            <Property name="text" type="java.lang.String" value="DNI                                                   *"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldDNICliente">
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel5">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Tel&#xe9;fono"/>
+            <Property name="text" type="java.lang.String" value="Tel&#xe9;fono                                          *"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldTelefonoCliente">
