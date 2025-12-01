@@ -25,6 +25,7 @@ public class JDialogPago extends javax.swing.JDialog {
     
     private panelCarrito carrito;
     private jPanelVentas2 panelVentas;
+    private panelProductos pProductos;
     
     
     public JDialogPago(Frame parent, boolean modal, panelCarrito carrito, jPanelVentas2 panelVentas) {
