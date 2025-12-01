@@ -146,6 +146,8 @@ public class jPanelVentas2 extends javax.swing.JPanel {
         else if(error == 2) {
             JOptionPane.showMessageDialog(this, "Error al actualizar stock.", "ERROR", JOptionPane.ERROR_MESSAGE);
         }
+        
+        pProductos.mostrarTipos();
     }
 
 
