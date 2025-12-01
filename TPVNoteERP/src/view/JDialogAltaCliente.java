@@ -65,19 +65,19 @@ public class JDialogAltaCliente extends javax.swing.JDialog {
 
         jPanel2.setLayout(new java.awt.GridLayout(6, 2, 10, 10));
 
-        jLabel2.setText("Nombre");
+        jLabel2.setText("Nombre                                           *");
         jPanel2.add(jLabel2);
         jPanel2.add(jTextFieldNombreCliente);
 
-        jLabel3.setText("Apellidos");
+        jLabel3.setText("Apellidos                                         *");
         jPanel2.add(jLabel3);
         jPanel2.add(jTextFieldApellidoCliente);
 
-        jLabel4.setText("DNI");
+        jLabel4.setText("DNI                                                   *");
         jPanel2.add(jLabel4);
         jPanel2.add(jTextFieldDNICliente);
 
-        jLabel5.setText("Teléfono");
+        jLabel5.setText("Teléfono                                          *");
         jPanel2.add(jLabel5);
         jPanel2.add(jTextFieldTelefonoCliente);
 
@@ -128,12 +128,42 @@ public class JDialogAltaCliente extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonEnviarCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEnviarCActionPerformed
+        String nombre = jTextFieldNombreCliente.getText().trim();
+        String apellidos = jTextFieldApellidoCliente.getText().trim();
+        String dni = jTextFieldDNICliente.getText().trim();
+        String telefono = jTextFieldTelefonoCliente.getText().trim();
+        String email = jTextFieldEmailCliente.getText().trim();
+        
+        if(nombre.isEmpty()||apellidos.isEmpty()||dni.isEmpty()||telefono.isEmpty()){
+            JOptionPane.showMessageDialog(this, "Nombre, Apellidos, DNI y telefono son obligatorios", "ERROR", JOptionPane.ERROR_MESSAGE);
+            jTextFieldNombreCliente.requestFocus();
+            return;
+        }
+        
+        if (!dni.matches("\\d{8}[A-Za-z]")) {
+            JOptionPane.showMessageDialog(this, "El campo 'DNI' debe tener 8 números seguidos de una letra.", "Error", JOptionPane.ERROR_MESSAGE);
+            jTextFieldDNICliente.requestFocus();
+            return;
+        }
+        
+        if (telefono.isEmpty() || !telefono.matches("\\d{9}")){
+            JOptionPane.showMessageDialog(this, "El campo 'Teléfono' debe tener exactamente 9 dígitos.", "Error", JOptionPane.ERROR_MESSAGE);
+            jTextFieldTelefonoCliente.requestFocus();
+            return;
+        }
+        
+        if (email.isEmpty() || !email.matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")) {
+            JOptionPane.showMessageDialog(this, "El campo 'Email' no es válido.", "Error", JOptionPane.ERROR_MESSAGE);
+            jTextFieldEmailCliente.requestFocus();
+            return;
+        }
+        
         Cliente nuevo = new Cliente ();
-                nuevo.setNombre(jTextFieldNombreCliente.getText());
-                nuevo.setApellidos(jTextFieldApellidoCliente.getText());
-                nuevo.setDni(jTextFieldDNICliente.getText());
-                nuevo.setTelefono(jTextFieldTelefonoCliente.getText());
-                nuevo.setEmail(jTextFieldEmailCliente.getText());
+                nuevo.setNombre(nombre);
+                nuevo.setApellidos(apellidos);
+                nuevo.setDni(dni);
+                nuevo.setTelefono(telefono);
+                nuevo.setEmail(email);
                 nuevo.setDireccion(jTextFieldDireccionCliente.getText());
                 //nuevo.setFecha_alta(NOW());
                 ClienteDAO cdao = new ClienteDAO();

@@ -23,7 +23,9 @@ import java.util.Arrays;
 import java.util.List;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.SwingConstants;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import model.Cliente;
 
@@ -97,6 +99,9 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jTableUsuarios.setModel(dtmu);
         jTableClientes.setModel(dtmc);
         jTableProductos.setModel(dtm);
+        
+
+        
         dtm.addTableModelListener(e -> { //habilita el botón en cuanto haya un cambio en la tabla
             if (cargandoTablas) return;
             if (e.getType() == javax.swing.event.TableModelEvent.UPDATE) {
@@ -141,6 +146,14 @@ public class MenuPrincipal extends javax.swing.JFrame {
         dtm.setColumnIdentifiers(pdao.obtenerNombresColumnas());
         dtmc.setColumnIdentifiers(cdao.obtenerNombresColumnas());
         dtmu.setColumnIdentifiers(udao.obtenerNombresColumnas());
+        //alinear numeros a la derecha
+        DefaultTableCellRenderer derechaRenderer = new DefaultTableCellRenderer();
+        derechaRenderer.setHorizontalAlignment(SwingConstants.RIGHT);
+        
+        
+        jTableProductos.getColumnModel().getColumn(3).setCellRenderer(derechaRenderer);
+        jTableProductos.getColumnModel().getColumn(4).setCellRenderer(derechaRenderer);
+        
         jButtonModificar.setEnabled(false);
         jButtonModificarClient.setEnabled(false);
         comboListo = true;
