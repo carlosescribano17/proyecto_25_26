@@ -69,6 +69,10 @@ public class panelCarrito extends javax.swing.JPanel {
                 double precio = (double) modeloCarrito.getValueAt(i, 2);
                 modeloCarrito.setValueAt(precio * nuevaCantidad, i, 4);
 
+                DecimalFormat formato = new DecimalFormat("#,###.00");
+                String total = formato.format(calcularTotalPedido());
+                parent.cambiarTotal(total);
+                
                 return;
             }
         }
@@ -110,6 +114,10 @@ public class panelCarrito extends javax.swing.JPanel {
             modeloCarrito.removeRow(fila);
             carrito.remove(fila);
         }
+        
+        DecimalFormat formato = new DecimalFormat("#,###.00");
+        String total = formato.format(calcularTotalPedido());
+        parent.cambiarTotal(total);
     }
     
 
