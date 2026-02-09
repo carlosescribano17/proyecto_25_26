@@ -95,6 +95,8 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jPanelVentas2 panel = new jPanelVentas2(userActual, cardLayout, jPanelVentanaUnica);
         jPanelVentanaUnica.add(panel, "ventas2");
         
+        jPanelInformes panelInformes = new jPanelInformes();
+        jPanelVentanaUnica.add(panelInformes, "informes");
         
         jTableUsuarios.setModel(dtmu);
         jTableClientes.setModel(dtmc);
@@ -747,7 +749,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnVolverStockActionPerformed
 
     private void btnInformesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInformesActionPerformed
-        cardLayout.show(jPanelVentanaUnica,"stock");
+        cardLayout.show(jPanelVentanaUnica,"informes");
     }//GEN-LAST:event_btnInformesActionPerformed
 
     private void btnVolverUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverUsuariosActionPerformed
