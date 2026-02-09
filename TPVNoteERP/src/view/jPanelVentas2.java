@@ -133,7 +133,7 @@ public class jPanelVentas2 extends javax.swing.JPanel {
             int id = (int) pCarrito.getModelo().getValueAt(i, 0);
             int stock  = pdao.getStock(id);
             int cantidad = (int) pCarrito.getModelo().getValueAt(i, 3);
-             System.out.println(id + "-" +  stock + "-" + cantidad);
+            //System.out.println(id + "-" +  stock + "-" + cantidad);
             if (pdao.restarStock(id, cantidad, stock)){
                 error = 1;
             }else {
