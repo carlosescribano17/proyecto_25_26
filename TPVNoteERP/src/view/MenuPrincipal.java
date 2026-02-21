@@ -95,7 +95,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jPanelVentas2 panel = new jPanelVentas2(userActual, cardLayout, jPanelVentanaUnica);
         jPanelVentanaUnica.add(panel, "ventas2");
         
-        jPanelInformes panelInformes = new jPanelInformes();
+        jPanelInformes panelInformes = new jPanelInformes(cardLayout, jPanelVentanaUnica);
         jPanelVentanaUnica.add(panelInformes, "informes");
         
         jTableUsuarios.setModel(dtmu);
