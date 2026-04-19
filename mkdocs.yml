@@ -9,15 +9,15 @@ theme:
   palette:
     - media: "(prefers-color-scheme: light)"
       scheme: default
-      primary: indigo
-      accent: indigo
+      primary: teal
+      accent: teal
       toggle:
         icon: material/brightness-7
         name: Modo oscuro
     - media: "(prefers-color-scheme: dark)"
       scheme: slate
-      primary: indigo
-      accent: indigo
+      primary: teal
+      accent: teal
       toggle:
         icon: material/brightness-4
         name: Modo claro
@@ -41,6 +41,10 @@ markdown_extensions:
 
 nav:
   - Inicio: index.md
-  - Manual de Usuario:
-    - Introducción: guia/introduccion.md
-    - Uso Básico: guia/uso_basico.md
+  - Introducción: guia/introduccion.md
+  - Uso Básico: guia/uso_basico.md
+  - Ventas: guia/ventas.md
+  - Productos: guia/productos.md
+  - Clientes: guia/clientes.md
+  - Usuarios: guia/usuarios.md
+  - Informes: guia/informes.md
