@@ -1,4 +1,4 @@
-name: ci
+name: cigit
 on:
   push:
     branches:
