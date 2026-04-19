@@ -42,5 +42,5 @@ markdown_extensions:
 nav:
   - Inicio: index.md
   - Manual de Usuario:
-    - Introducción: manual/introduccion.md
-    - Uso Básico: manual/uso_basico.md
+    - Introducción: guia/introduccion.md
+    - Uso Básico: guia/uso_basico.md
