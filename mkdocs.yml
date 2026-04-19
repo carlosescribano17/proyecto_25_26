@@ -1,0 +1,47 @@
+site_name: Manual de Usuario - NoteERP
+site_url: https://github.com/carlosescribano17/proyecto_25_26
+repo_url: https://github.com/carlosescribano17/proyecto_25_26
+repo_name: proyecto_25_26
+
+theme:
+  name: material
+  language: es
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-7
+        name: Modo oscuro
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-4
+        name: Modo claro
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+
+plugins:
+  - search
+
+markdown_extensions:
+  - pymdownx.highlight
+  - pymdownx.inlinehilite
+  - pymdownx.superfences
+  - tables
+  - toc:
+      permalink: true
+
+nav:
+  - Inicio: index.md
+  - Guía de Usuario:
+      - Primeros pasos: guia/primeros-pasos.md
+      - Instalación: guia/instalacion.md
+  - FAQ: faq.md
