@@ -33,6 +33,7 @@ public class JDialogPago extends javax.swing.JDialog {
         this.carrito = carrito;
         this.panelVentas = panelVentas;
         initComponents();
+        DarkThemeUtil.apply(this);
     }
 
     /**

@@ -5,7 +5,12 @@
 package view;
 
 import java.sql.Connection;
+import java.awt.BorderLayout;
 import java.awt.CardLayout;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.GridLayout;
+import java.awt.FlowLayout;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
@@ -13,8 +18,14 @@ import java.time.Instant;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
+import javax.swing.JComponent;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.view.JasperViewer;
@@ -39,6 +50,8 @@ public class jPanelInformes extends javax.swing.JPanel {
     public jPanelInformes(CardLayout cardLayout, JPanel panelVentana) {
         initComponents();
         cargarProductos();
+        configurarVistaUserFriendly();
+        DarkThemeUtil.apply(this);
         
         this.cardLayout = cardLayout;
         this.panelVentana = panelVentana;
@@ -47,6 +60,99 @@ public class jPanelInformes extends javax.swing.JPanel {
         }catch(Exception E){
             System.out.println(E);
         }
+    }
+    
+    private void configurarVistaUserFriendly() {
+        setLayout(new BorderLayout(24, 24));
+        setBorder(BorderFactory.createEmptyBorder(28, 28, 28, 28));
+        
+        JLabel titulo = new JLabel("Centro de Informes");
+        titulo.setFont(new Font("Segoe UI", Font.BOLD, 28));
+        
+        JLabel subtitulo = new JLabel("Genera informes de ventas y stock con un clic.");
+        subtitulo.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+        
+        JPanel cabecera = new JPanel();
+        cabecera.setLayout(new BoxLayout(cabecera, BoxLayout.Y_AXIS));
+        cabecera.add(titulo);
+        cabecera.add(Box.createRigidArea(new Dimension(0, 8)));
+        cabecera.add(subtitulo);
+        
+        JPanel gridAcciones = new JPanel(new GridLayout(4, 2, 14, 14));
+        gridAcciones.setPreferredSize(new Dimension(940, 280));
+        
+        btnVentasSemanales.setText("Ventas por semana");
+        btnVentasProducto.setText("Ventas por producto");
+        btnVentasClientes.setText("Ventas por clientes");
+        btnVentasAnuales.setText("Ventas anuales");
+        btnVentasCategoria.setText("Ventas por categoria");
+        btnStockTotal.setText("Stock total");
+        
+        btnVentasSemanales.setToolTipText("Muestra la evolucion semanal de ventas.");
+        btnVentasProducto.setToolTipText("Informe de ventas del producto seleccionado.");
+        btnVentasClientes.setToolTipText("Resumen de compras por cliente.");
+        btnVentasAnuales.setToolTipText("Totales de ventas del ano en curso.");
+        btnVentasCategoria.setToolTipText("Comparativa de ventas por categoria.");
+        btnStockTotal.setToolTipText("Inventario total disponible.");
+        
+        gridAcciones.add(btnVentasSemanales);
+        gridAcciones.add(btnVentasClientes);
+        
+        JPanel panelProducto = new JPanel();
+        panelProducto.setLayout(new FlowLayout(FlowLayout.CENTER, 12, 6));
+        
+        btnVentasProducto.setPreferredSize(new Dimension(220, 52));
+        btnVentasProducto.setFont(new Font("Segoe UI", Font.BOLD, 17));
+        
+        Dimension comboSize = new Dimension(260, 44);
+        jComboBoxProductos.setPreferredSize(comboSize);
+        jComboBoxProductos.setMinimumSize(comboSize);
+        jComboBoxProductos.setMaximumSize(comboSize);
+        jComboBoxProductos.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+        jComboBoxProductos.setAlignmentY(JComponent.CENTER_ALIGNMENT);
+        
+        panelProducto.add(btnVentasProducto);
+        panelProducto.add(jComboBoxProductos);
+        
+        gridAcciones.add(panelProducto);
+        gridAcciones.add(btnVentasAnuales);
+        gridAcciones.add(btnVentasCategoria);
+        gridAcciones.add(btnStockTotal);
+        gridAcciones.add(new JLabel(""));
+        gridAcciones.add(jButton1);
+        
+        JPanel izquierda = new JPanel(new BorderLayout(0, 18));
+        izquierda.add(cabecera, BorderLayout.NORTH);
+        izquierda.add(gridAcciones, BorderLayout.CENTER);
+        
+        JLabel tituloDerecha = new JLabel("Consejos Rapidos");
+        tituloDerecha.setFont(new Font("Segoe UI", Font.BOLD, 20));
+        
+        JTextArea ayuda = new JTextArea();
+        ayuda.setEditable(false);
+        ayuda.setLineWrap(true);
+        ayuda.setWrapStyleWord(true);
+        ayuda.setOpaque(false);
+        ayuda.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+        ayuda.setText(
+                "- Usa \"Ventas por producto\" para analizar un articulo concreto.\n\n"
+                + "- \"Ventas por categoria\" te ayuda a decidir reposicion de stock.\n\n"
+                + "- \"Stock total\" es ideal para revisiones rapidas antes de cerrar caja.\n\n"
+                + "- Puedes abrir varios informes seguidos sin salir de esta pantalla."
+        );
+        
+        JPanel derecha = new JPanel(new BorderLayout(0, 12));
+        derecha.setBorder(BorderFactory.createEmptyBorder(8, 8, 8, 8));
+        derecha.setPreferredSize(new Dimension(420, 0));
+        derecha.add(tituloDerecha, BorderLayout.NORTH);
+        derecha.add(ayuda, BorderLayout.CENTER);
+
+        removeAll();
+        add(izquierda, BorderLayout.CENTER);
+        add(derecha, BorderLayout.EAST);
+        
+        revalidate();
+        repaint();
     }
 
     /**

@@ -23,6 +23,7 @@ public class LoginView1 extends javax.swing.JFrame {
      */
     public LoginView1() {
         initComponents();
+        DarkThemeUtil.apply(this);
         
         getRootPane().setDefaultButton(btnLogin);
     }

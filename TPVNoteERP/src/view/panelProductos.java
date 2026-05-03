@@ -60,12 +60,15 @@ public class panelProductos extends javax.swing.JPanel {
         tablaListado.addMouseListener(new java.awt.event.MouseAdapter() {
         @Override
         public void mouseClicked(java.awt.event.MouseEvent evt) {
+            Producto seleccionado = obtenerProductoSeleccionado();
+            parent.mostrarProductoSeleccionado(seleccionado);
             //meter producto al carrito si se hace doble click
             if (evt.getClickCount() == 2) {
                 pasarProductoAlCarrito();
             }
         }
     });
+        DarkThemeUtil.apply(this);
 
     }
 
@@ -104,11 +107,18 @@ public class panelProductos extends javax.swing.JPanel {
     }
     
     private void pasarProductoAlCarrito() {
-        int fila = tablaListado.getSelectedRow();
-        if (fila == -1) return;
+        Producto p = obtenerProductoSeleccionado();
+        if (p == null) return;
+        parent.getCarritoPanel().agregarProducto(p);
+    }
+    
+    private Producto obtenerProductoSeleccionado() {
+        int filaVista = tablaListado.getSelectedRow();
+        if (filaVista == -1) return null;
+        int fila = tablaListado.convertRowIndexToModel(filaVista);
 
         Producto p = new Producto();
-        
+
         p.setId_producto((int) modeloListado.getValueAt(fila, 0));
         p.setNombre((String) modeloListado.getValueAt(fila, 1));
         p.setMarca((String) modeloListado.getValueAt(fila, 2));
@@ -120,7 +130,7 @@ public class panelProductos extends javax.swing.JPanel {
         p.setActivo((int) modeloListado.getValueAt(fila, 8));
         p.setFecha_alta((java.sql.Timestamp) modeloListado.getValueAt(fila, 9));
 
-        parent.getCarritoPanel().agregarProducto(p);
+        return p;
     }
     
     /**

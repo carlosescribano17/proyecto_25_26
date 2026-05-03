@@ -56,6 +56,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
      */
     public MenuPrincipal(Usuario user) {
         initComponents();
+        DarkThemeUtil.apply(this);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         
         this.userActual = user;
@@ -159,6 +160,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jButtonModificar.setEnabled(false);
         jButtonModificarClient.setEnabled(false);
         comboListo = true;
+        DarkThemeUtil.apply(this);
     }
 
     public void cargarProductosPorTipo() {

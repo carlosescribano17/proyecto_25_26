@@ -11,7 +11,11 @@ import dao.VentaDAO;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Frame;
+import java.awt.Image;
+import java.io.File;
+import java.net.URL;
 import java.util.*;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
@@ -61,12 +65,54 @@ public class jPanelVentas2 extends javax.swing.JPanel {
         for(Cliente c : listaC){
             jComboBoxClientes.addItem(c.getIdCliente() + "-" + c.getNombre() + " " +  c.getApellidos());
         }
+        DarkThemeUtil.apply(this);
         revalidate();
         repaint();
     }
     
     public panelCarrito getCarritoPanel() {
         return pCarrito;
+    }
+    
+    public void mostrarProductoSeleccionado(model.Producto producto) {
+        if (producto == null) {
+            limpiarImagenProducto();
+            return;
+        }
+        mostrarImagenProducto(producto.getImagen_url(), producto.getNombre());
+    }
+    
+    public void limpiarImagenProducto() {
+        jLabelPreview.setIcon(null);
+        jLabelPreview.setText("Selecciona un producto para ver su imagen");
+    }
+    
+    private void mostrarImagenProducto(String rutaImagen, String nombreProducto) {
+        jLabelPreview.setIcon(null);
+        if (rutaImagen == null || rutaImagen.trim().isEmpty()) {
+            jLabelPreview.setText("Sin imagen disponible");
+            return;
+        }
+        try {
+            ImageIcon icon;
+            String ruta = rutaImagen.trim();
+            if (ruta.startsWith("http://") || ruta.startsWith("https://")) {
+                icon = new ImageIcon(new URL(ruta));
+            } else {
+                icon = new ImageIcon(new File(ruta).getAbsolutePath());
+            }
+            if (icon.getIconWidth() <= 0) {
+                jLabelPreview.setText("No se pudo cargar la imagen");
+                return;
+            }
+            Image escalada = icon.getImage().getScaledInstance(220, 220, Image.SCALE_SMOOTH);
+            jLabelPreview.setIcon(new ImageIcon(escalada));
+            jLabelPreview.setText("<html><div style='text-align:center;'>" + nombreProducto + "</div></html>");
+            jLabelPreview.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+            jLabelPreview.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        } catch (Exception ex) {
+            jLabelPreview.setText("No se pudo cargar la imagen");
+        }
     }
     
     public void cambiarTotal(String total){
@@ -165,6 +211,8 @@ public class jPanelVentas2 extends javax.swing.JPanel {
         btnVolver = new javax.swing.JButton();
         btnAnterior = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
+        jPanelPreview = new javax.swing.JPanel();
+        jLabelPreview = new javax.swing.JLabel();
         jLabelTotal = new javax.swing.JLabel();
         jComboBoxClientes = new javax.swing.JComboBox<>();
         jButtonPagar = new javax.swing.JButton();
@@ -184,6 +232,12 @@ public class jPanelVentas2 extends javax.swing.JPanel {
 
         btnEliminar.setText("Eliminar");
         btnEliminar.addActionListener(this::btnEliminarActionPerformed);
+
+        jPanelPreview.setLayout(new java.awt.BorderLayout());
+
+        jLabelPreview.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelPreview.setText("Selecciona un producto para ver su imagen");
+        jPanelPreview.add(jLabelPreview, java.awt.BorderLayout.CENTER);
 
         jLabelTotal.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelTotal.setText("0,00");
@@ -214,7 +268,8 @@ public class jPanelVentas2 extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanelProductos2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(142, 142, 142)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jPanelPreview, javax.swing.GroupLayout.DEFAULT_SIZE, 240, Short.MAX_VALUE)
                             .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnAnterior, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(139, 139, 139)
@@ -234,7 +289,9 @@ public class jPanelVentas2 extends javax.swing.JPanel {
                         .addComponent(btnAnterior, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(55, 55, 55)
                         .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 391, Short.MAX_VALUE))
+                        .addGap(30, 30, 30)
+                        .addComponent(jPanelPreview, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 121, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -282,7 +339,9 @@ public class jPanelVentas2 extends javax.swing.JPanel {
     private javax.swing.JButton jButtonPagar;
     private javax.swing.JComboBox<String> jComboBoxClientes;
     private javax.swing.JLabel jLabelTotal;
+    private javax.swing.JLabel jLabelPreview;
     private javax.swing.JPanel jPanelCarrito2;
+    private javax.swing.JPanel jPanelPreview;
     private javax.swing.JPanel jPanelProductos2;
     // End of variables declaration//GEN-END:variables
 }

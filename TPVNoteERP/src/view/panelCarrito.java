@@ -33,6 +33,7 @@ public class panelCarrito extends javax.swing.JPanel {
         this.parent = parent;
         initComponents();
         initCarritoUI();
+        DarkThemeUtil.apply(this);
         
     }
     
