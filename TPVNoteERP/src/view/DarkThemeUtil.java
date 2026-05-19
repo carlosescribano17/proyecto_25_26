@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Font;
+import java.awt.Insets;
+import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -19,6 +21,7 @@ import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JViewport;
+import javax.swing.plaf.basic.BasicArrowButton;
 
 public final class DarkThemeUtil {
 
@@ -109,11 +112,13 @@ public final class DarkThemeUtil {
             combo.setForeground(FG_MAIN);
             combo.setFont(new Font("Segoe UI", Font.PLAIN, 13));
             combo.setBorder(BorderFactory.createLineBorder(BORDER, 1, true));
+            styleArrowButtons(combo);
         } else if (c instanceof JSpinner) {
             JSpinner s = (JSpinner) c;
             s.setBackground(BG_INPUT);
             s.setForeground(FG_MAIN);
             s.setBorder(BorderFactory.createLineBorder(BORDER, 1, true));
+            styleArrowButtons(s);
         } else if (c instanceof JTable) {
             JTable table = (JTable) c;
             table.setBackground(BG_INPUT);
@@ -148,6 +153,26 @@ public final class DarkThemeUtil {
         if (c instanceof JTextField) {
             JTextField tf = (JTextField) c;
             tf.setCaretColor(FG_MAIN);
+        }
+    }
+
+    private static void styleArrowButtons(Container container) {
+        for (Component child : container.getComponents()) {
+            if (child instanceof BasicArrowButton) {
+                BasicArrowButton arrow = (BasicArrowButton) child;
+                arrow.setBackground(BG_INPUT);
+                arrow.setForeground(FG_MAIN);
+                arrow.setBorder(BorderFactory.createEmptyBorder());
+                arrow.setOpaque(true);
+            } else if (child instanceof AbstractButton) {
+                AbstractButton b = (AbstractButton) child;
+                b.setBackground(BG_INPUT);
+                b.setForeground(FG_MAIN);
+                b.setBorder(BorderFactory.createEmptyBorder());
+                b.setMargin(new Insets(0, 0, 0, 0));
+                b.setFocusable(false);
+                b.setOpaque(true);
+            }
         }
     }
 

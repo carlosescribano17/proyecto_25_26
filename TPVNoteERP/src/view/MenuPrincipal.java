@@ -10,11 +10,14 @@ import dao.ClienteDAO;
 import dao.ProductoDAO;
 import dao.UsuarioDAO;
 import java.awt.CardLayout;
+import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.net.URL;
 import javax.swing.JFrame;
+import javax.swing.ImageIcon;
 import javax.swing.UIManager;
 import model.Producto;
 import model.Usuario;
@@ -161,6 +164,97 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jButtonModificarClient.setEnabled(false);
         comboListo = true;
         DarkThemeUtil.apply(this);
+        setupBranding();
+        setupMainMenuIcons();
+    }
+    
+    private void setupBranding() {
+        jLabelUsuario.setText("NoteERP  |  Bienvenid@, " + userActual.getUsuario());
+        jLabelUsuario.setHorizontalAlignment(SwingConstants.CENTER);
+        jLabelUsuario.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 18));
+        jLabelUsuario.setPreferredSize(new java.awt.Dimension(771, 56));
+
+        ImageIcon logo = loadLogoIcon(220, 120);
+        if (logo != null) {
+            jLabelUsuario.setIcon(logo);
+            jLabelUsuario.setIconTextGap(10);
+        }
+    }
+
+    private ImageIcon loadLogoIcon(int width, int height) {
+        String[] routes = new String[]{
+            "TPVNoteERP/images/logoNoteERP.PNG",
+            "images/logoNoteERP.PNG"
+        };
+        for (String route : routes) {
+            File file = new File(route);
+            if (file.exists()) {
+                ImageIcon raw = new ImageIcon(file.getAbsolutePath());
+                if (raw.getIconWidth() > 0) {
+                    Image scaled = raw.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
+                    return new ImageIcon(scaled);
+                }
+            }
+        }
+
+        URL resource = getClass().getResource("/images/logoNoteERP.PNG");
+        if (resource != null) {
+            ImageIcon raw = new ImageIcon(resource);
+            if (raw.getIconWidth() > 0) {
+                Image scaled = raw.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
+                return new ImageIcon(scaled);
+            }
+        }
+        return null;
+    }
+
+    private void setupMainMenuIcons() {
+        applyMenuIcon(btnVentas, "carrito_compra.png", 46, 46);
+        applyMenuIcon(btnArticulos, "articulo.png", 46, 46);
+        applyMenuIcon(btnClientes, "clientes.png", 46, 46);
+        applyMenuIcon(btnInformes, "informe.png", 46, 46);
+        applyMenuIcon(btnUsuarios, "usuario.png", 46, 46);
+        applyMenuIcon(btnSalir, "exit.png", 46, 46);
+    }
+
+    private void applyMenuIcon(javax.swing.JButton button, String fileName, int width, int height) {
+        ImageIcon icon = loadImageIcon(fileName, width, height);
+        if (icon == null) {
+            return;
+        }
+        button.setIcon(icon);
+        button.setHorizontalAlignment(SwingConstants.CENTER);
+        button.setVerticalAlignment(SwingConstants.CENTER);
+        button.setHorizontalTextPosition(SwingConstants.CENTER);
+        button.setVerticalTextPosition(SwingConstants.BOTTOM);
+        button.setIconTextGap(8);
+    }
+
+    private ImageIcon loadImageIcon(String fileName, int width, int height) {
+        String[] routes = new String[]{
+            "TPVNoteERP/images/" + fileName,
+            "images/" + fileName
+        };
+        for (String route : routes) {
+            File file = new File(route);
+            if (file.exists()) {
+                ImageIcon raw = new ImageIcon(file.getAbsolutePath());
+                if (raw.getIconWidth() > 0) {
+                    Image scaled = raw.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
+                    return new ImageIcon(scaled);
+                }
+            }
+        }
+
+        URL resource = getClass().getResource("/images/" + fileName);
+        if (resource != null) {
+            ImageIcon raw = new ImageIcon(resource);
+            if (raw.getIconWidth() > 0) {
+                Image scaled = raw.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
+                return new ImageIcon(scaled);
+            }
+        }
+        return null;
     }
 
     public void cargarProductosPorTipo() {
@@ -391,7 +485,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
                 .addGap(14, 14, 14)
                 .addGroup(jPanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanelPrincipalLayout.createSequentialGroup()
-                        .addComponent(jLabelUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabelUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 954, Short.MAX_VALUE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))

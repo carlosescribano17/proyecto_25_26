@@ -25,7 +25,6 @@ public class JDialogAltaUsuario extends javax.swing.JDialog {
         super(parent, modal);
         jframepadre = (MenuPrincipal) parent;
         initComponents();
-        DarkThemeUtil.apply(this);
     }
 
     /**

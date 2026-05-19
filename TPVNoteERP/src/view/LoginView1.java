@@ -6,6 +6,13 @@ package view;
 
 import com.formdev.flatlaf.themes.FlatMacDarkLaf;
 import dao.UsuarioDAO;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Image;
+import java.io.File;
+import java.net.URL;
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import model.Usuario;
@@ -24,8 +31,57 @@ public class LoginView1 extends javax.swing.JFrame {
     public LoginView1() {
         initComponents();
         DarkThemeUtil.apply(this);
+        setupBranding();
+        setMinimumSize(new Dimension(560, 360));
+        setSize(560, 360);
+        setLocationRelativeTo(null);
         
         getRootPane().setDefaultButton(btnLogin);
+    }
+    
+    private void setupBranding() {
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel3.setOpaque(true);
+        jLabel3.setBackground(new Color(22, 32, 52));
+        jLabel3.setForeground(new Color(226, 232, 240));
+        jLabel3.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(new Color(71, 85, 105), 1, true),
+                BorderFactory.createEmptyBorder(12, 16, 12, 16)
+        ));
+        jLabel3.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 24));
+
+        ImageIcon logo = loadLogoIcon(180, 120);
+        if (logo != null) {
+            jLabel3.setIcon(logo);
+            jLabel3.setIconTextGap(12);
+        }
+    }
+
+    private ImageIcon loadLogoIcon(int width, int height) {
+        String[] routes = new String[]{
+            "TPVNoteERP/images/logoNoteERP.PNG",
+            "images/logoNoteERP.PNG"
+        };
+        for (String route : routes) {
+            File file = new File(route);
+            if (file.exists()) {
+                ImageIcon raw = new ImageIcon(file.getAbsolutePath());
+                if (raw.getIconWidth() > 0) {
+                    Image scaled = raw.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
+                    return new ImageIcon(scaled);
+                }
+            }
+        }
+
+        URL resource = getClass().getResource("/images/logoNoteERP.PNG");
+        if (resource != null) {
+            ImageIcon raw = new ImageIcon(resource);
+            if (raw.getIconWidth() > 0) {
+                Image scaled = raw.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
+                return new ImageIcon(scaled);
+            }
+        }
+        return null;
     }
 
     private void autenticar() {
@@ -95,14 +151,11 @@ public class LoginView1 extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 33, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(174, 174, 174))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 442, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(20, 20, 20))))
+                        .addGap(30, 30, 30)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 442, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 30, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addContainerGap())))
@@ -111,12 +164,12 @@ public class LoginView1 extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(67, 67, 67)
+                .addGap(22, 22, 22)
                 .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addContainerGap(18, Short.MAX_VALUE))
         );
 
         pack();

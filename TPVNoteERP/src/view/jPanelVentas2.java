@@ -129,6 +129,14 @@ public class jPanelVentas2 extends javax.swing.JPanel {
     
     public void hacerCompra(String s){
         double total = pCarrito.calcularTotalPedido();
+
+        if (total <= 0) {
+            JOptionPane.showMessageDialog(this,
+                    "No se puede completar una venta de 0 €. Añade productos al carrito.",
+                    "Aviso",
+                    JOptionPane.WARNING_MESSAGE);
+            return;
+        }
     
         // el empleado logeado que se pasa desde el main
         int idEmpleado = user.getId();
@@ -327,6 +335,14 @@ public class jPanelVentas2 extends javax.swing.JPanel {
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void jButtonPagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPagarActionPerformed
+        double total = pCarrito.calcularTotalPedido();
+        if (total <= 0) {
+            JOptionPane.showMessageDialog(this,
+                    "No se puede completar una venta de 0 €. Añade productos al carrito.",
+                    "Aviso",
+                    JOptionPane.WARNING_MESSAGE);
+            return;
+        }
         JDialogPago jdp = new JDialogPago((Frame) SwingUtilities.getWindowAncestor(this), true, pCarrito , this);
         jdp.setVisible(true);
     }//GEN-LAST:event_jButtonPagarActionPerformed
