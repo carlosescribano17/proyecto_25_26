@@ -182,29 +182,21 @@ public class MenuPrincipal extends javax.swing.JFrame {
     }
 
     private ImageIcon loadLogoIcon(int width, int height) {
-        String[] routes = new String[]{
-            "TPVNoteERP/images/logoNoteERP.PNG",
-            "images/logoNoteERP.PNG"
-        };
-        for (String route : routes) {
-            File file = new File(route);
-            if (file.exists()) {
-                ImageIcon raw = new ImageIcon(file.getAbsolutePath());
-                if (raw.getIconWidth() > 0) {
-                    Image scaled = raw.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
-                    return new ImageIcon(scaled);
-                }
-            }
-        }
-
         URL resource = getClass().getResource("/images/logoNoteERP.PNG");
+
         if (resource != null) {
             ImageIcon raw = new ImageIcon(resource);
-            if (raw.getIconWidth() > 0) {
-                Image scaled = raw.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
-                return new ImageIcon(scaled);
-            }
+
+            Image scaled = raw.getImage().getScaledInstance(
+                    width,
+                    height,
+                    Image.SCALE_SMOOTH
+            );
+
+            return new ImageIcon(scaled);
         }
+
+        System.out.println("No se encontró logo");
         return null;
     }
 
@@ -231,29 +223,23 @@ public class MenuPrincipal extends javax.swing.JFrame {
     }
 
     private ImageIcon loadImageIcon(String fileName, int width, int height) {
-        String[] routes = new String[]{
-            "TPVNoteERP/images/" + fileName,
-            "images/" + fileName
-        };
-        for (String route : routes) {
-            File file = new File(route);
-            if (file.exists()) {
-                ImageIcon raw = new ImageIcon(file.getAbsolutePath());
-                if (raw.getIconWidth() > 0) {
-                    Image scaled = raw.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
-                    return new ImageIcon(scaled);
-                }
-            }
+        URL resource = getClass().getResource("/images/" + fileName);
+
+        if (resource != null) {
+
+            ImageIcon raw = new ImageIcon(resource);
+
+            Image scaled = raw.getImage().getScaledInstance(
+                    width,
+                    height,
+                    Image.SCALE_SMOOTH
+            );
+
+            return new ImageIcon(scaled);
         }
 
-        URL resource = getClass().getResource("/images/" + fileName);
-        if (resource != null) {
-            ImageIcon raw = new ImageIcon(resource);
-            if (raw.getIconWidth() > 0) {
-                Image scaled = raw.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
-                return new ImageIcon(scaled);
-            }
-        }
+        System.out.println("No se encontró: " + fileName);
+
         return null;
     }
 

@@ -75,6 +75,13 @@ public class jPanelVentas2 extends javax.swing.JPanel {
     }
     
     public void mostrarProductoSeleccionado(model.Producto producto) {
+        cdao = new ClienteDAO();
+        List<Cliente> listaC = cdao.obtenerTodos();
+        jComboBoxClientes.removeAllItems();
+        jComboBoxClientes.addItem("INVITADO");
+        for(Cliente c : listaC){
+            jComboBoxClientes.addItem(c.getIdCliente() + "-" + c.getNombre() + " " +  c.getApellidos());
+        }
         if (producto == null) {
             limpiarImagenProducto();
             return;
