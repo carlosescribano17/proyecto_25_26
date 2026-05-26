@@ -20,7 +20,7 @@ Name: "desktopicon"; Description: "Crear acceso directo en el escritorio"; Group
 [Files]
 Source: "dist\TPVNoteERP.jar"; DestDir: "{app}"; Flags: ignoreversion
 Source: "dist\lib\*"; DestDir: "{app}\lib"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "Informes\*"; DestDir: "{app}\Informes"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "src\Informes\*"; DestDir: "{app}\src\Informes"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; Si existe una carpeta runtime se puede descomentar para distribuir Java 8 embebido.
 ;Source: "runtime\*"; DestDir: "{app}\runtime"; Flags: ignoreversion recursesubdirs createallsubdirs
 [Icons]
