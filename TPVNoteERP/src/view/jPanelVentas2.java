@@ -44,7 +44,7 @@ public class jPanelVentas2 extends javax.swing.JPanel {
     
     public jPanelVentas2(Usuario user, CardLayout cardLayout,JPanel panelVentana) {
         initComponents();
-        
+        btnEliminar.setText("ELIMINAR");
         this.user = user;
         this.cardLayout = cardLayout;
         this.panelVentana = panelVentana;

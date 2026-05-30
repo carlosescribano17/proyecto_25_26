@@ -33,7 +33,9 @@ public class panelProductos extends javax.swing.JPanel {
         initComponents();
         
         pdao = new ProductoDAO();
-
+        btnAccesorios.setText("ACCESORIOS");
+        btnAmplificadores.setText("AMPLIFICADORES");
+        btnGuitarras.setText("GUITARRAS");
         tablaListado = new JTable();
         modeloListado = new DefaultTableModel(new String[]{
             "id_producto", "nombre", "marca", "precio", "stock", "tipo_producto",
@@ -214,17 +216,17 @@ public class panelProductos extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAccesoriosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAccesoriosActionPerformed
-        pruebaListado.setText("accesorios");
+        pruebaListado.setText("ACCESORIOS");
         cargarListadoPorTipo("ACCESORIO");
     }//GEN-LAST:event_btnAccesoriosActionPerformed
 
     private void btnAmplificadoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAmplificadoresActionPerformed
-        pruebaListado.setText("amplis");
+        pruebaListado.setText("AMPLIS");
         cargarListadoPorTipo("AMPLIFICADOR");
     }//GEN-LAST:event_btnAmplificadoresActionPerformed
 
     private void btnGuitarrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuitarrasActionPerformed
-        pruebaListado.setText("guitarras");
+        pruebaListado.setText("GUITARRAS");
         cargarListadoPorTipo("GUITARRA");
     }//GEN-LAST:event_btnGuitarrasActionPerformed
 
